@@ -1,5 +1,5 @@
-from project.model import Model
 from project.data import MyDataset
+from project.model import Model
 
 
 def train():
