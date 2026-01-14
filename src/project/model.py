@@ -9,6 +9,10 @@ class Model(nn.Module):
     def __init__(self, model_name: str = "distilbert-base-uncased"):
         super().__init__()
         self.encoder = AutoModel.from_pretrained(model_name)
+
+        for param in self.encoder.parameters():
+            param.requires_grad = False
+        
         hidden_size = self.encoder.config.hidden_size
         self.classifier = nn.Linear(hidden_size, 1)
 
