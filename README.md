@@ -4,10 +4,10 @@ Machine Learning Operations Project
 
 ## Students
 
-s195171 - Kenneth Plum Toft
-s242726 - Philip Arthur Blaafjell
-s243586 - Joakim Dinh
-s242723 - Vebjørn Sæten Skre
+s195171 - Kenneth Plum Toft <br>
+s242726 - Philip Arthur Blaafjell <br>
+s243586 - Joakim Dinh <br>
+s242723 - Vebjørn Sæten Skre <br>
 
 ## Goal of the project
 
