@@ -1,19 +1,39 @@
 import torch
 from torch import nn
+from transformers import AutoModel
 
 
 class Model(nn.Module):
-    """Just a dummy model to show how to structure your code"""
+    """Binary text classification model."""
 
-    def __init__(self):
+    def __init__(self, model_name: str = "distilbert-base-uncased"):
         super().__init__()
-        self.layer = nn.Linear(1, 1)
+        self.encoder = AutoModel.from_pretrained(model_name)
+        hidden_size = self.encoder.config.hidden_size
+        self.classifier = nn.Linear(hidden_size, 1)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.layer(x)
+    def forward(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
+        outputs = self.encoder(
+            input_ids=input_ids,
+            attention_mask=attention_mask,
+        )
+        cls_embedding = outputs.last_hidden_state[:, 0]
+        logits = self.classifier(cls_embedding)
+        return logits.squeeze(-1)
 
 
 if __name__ == "__main__":
+    from transformers import AutoTokenizer
+
+    tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
     model = Model()
-    x = torch.rand(1)
-    print(f"Output shape of model: {model(x).shape}")
+
+    batch = tokenizer(
+        ["this is a test"],
+        padding=True,
+        truncation=True,
+        return_tensors="pt",
+    )
+
+    out = model(batch["input_ids"], batch["attention_mask"])
+    print(out.shape)
