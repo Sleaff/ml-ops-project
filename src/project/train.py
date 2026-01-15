@@ -4,8 +4,10 @@ from torch.utils.data import DataLoader, random_split
 from tqdm import tqdm
 from transformers import AutoTokenizer
 
-from project.dataset import NewsDataset
-from project.model import Model
+# from project.dataset import NewsDataset
+# from project.model import Model
+from dataset import NewsDataset
+from model import Model
 
 
 def train():
