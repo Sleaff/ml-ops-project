@@ -1,13 +1,15 @@
+import os
+from pathlib import Path
+
 import torch
 from torch import nn, optim
 from torch.utils.data import DataLoader, random_split
 from tqdm import tqdm
 from transformers import AutoTokenizer
-import os
+
+from project.data import MyDataset
 from project.dataset import NewsDataset
 from project.model import Model
-from project.data import MyDataset
-from pathlib import Path
 
 
 def train():
