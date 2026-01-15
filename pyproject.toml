@@ -65,7 +65,9 @@ omit = [
     "tests/*",
     "*/site-packages/*",
     "*/.venv/*",
-    "/tmp/*"
+    "*/tmp*/*",
+    "*/Temp/*",
+    "*/__pycache__/*",
 ]
 
 [tool.coverage.report]
