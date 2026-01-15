@@ -13,6 +13,8 @@ COPY README.md README.md
 COPY src/ src/
 
 WORKDIR /
-RUN uv sync --locked --no-cache --no-install-project
+ENV UV_LINK_MODE=copy
+RUN --mount=type=cache,target=/root/.cache/uv uv sync
+#RUN uv sync --locked --no-cache --no-install-project
 
 ENTRYPOINT ["uv", "run", "src/project/train.py"]
