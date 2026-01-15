@@ -39,7 +39,6 @@ class MyDataset(Dataset):
         print(f"Saved processed data to {output_path}")
 
 
-
 def preprocess(data_path: Path, output_folder: Path) -> None:
     print("Preprocessing data...")
     dataset = MyDataset(data_path)

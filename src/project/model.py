@@ -12,7 +12,7 @@ class Model(nn.Module):
 
         for param in self.encoder.parameters():
             param.requires_grad = False
-        
+
         hidden_size = self.encoder.config.hidden_size
         self.classifier = nn.Linear(hidden_size, 1)
 

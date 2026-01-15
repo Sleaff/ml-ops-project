@@ -1,8 +1,8 @@
 import torch
-from torch.utils.data import DataLoader, random_split
-from transformers import AutoTokenizer
 from torch import nn, optim
+from torch.utils.data import DataLoader, random_split
 from tqdm import tqdm
+from transformers import AutoTokenizer
 
 from project.dataset import NewsDataset
 from project.model import Model
