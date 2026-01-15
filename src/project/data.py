@@ -1,8 +1,31 @@
+import shutil
 from pathlib import Path
 
+import kagglehub
 import pandas as pd
 import typer
 from torch.utils.data import Dataset
+
+
+def download_data(data_path: Path) -> None:
+    fake_path = data_path / "Fake.csv"
+    real_path = data_path / "True.csv"
+
+    if fake_path.exists() and real_path.exists():
+        print("Data already exists, skipping download.")
+        return
+
+    print("Downloading data from Kaggle...")
+    data_path.mkdir(parents=True, exist_ok=True)
+
+    downloaded_path = kagglehub.dataset_download("clmentbisaillon/fake-and-real-news-dataset")
+    print(f"Dataset downloaded to: {downloaded_path}")
+
+    downloaded_path = Path(downloaded_path)
+    shutil.copy(downloaded_path / "Fake.csv", fake_path)
+    shutil.copy(downloaded_path / "True.csv", real_path)
+
+    print(f"Data copied to {data_path}")
 
 
 class MyDataset(Dataset):
@@ -40,6 +63,8 @@ class MyDataset(Dataset):
 
 
 def preprocess(data_path: Path, output_folder: Path) -> None:
+    print("Downloading data...")
+    download_data(data_path)
     print("Preprocessing data...")
     dataset = MyDataset(data_path)
     dataset.preprocess(output_folder)
