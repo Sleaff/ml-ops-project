@@ -1226,6 +1226,35 @@ wheels = [
 ]
 
 [[package]]
+name = "kagglehub"
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "kagglesdk" },
+    { name = "packaging" },
+    { name = "pyyaml" },
+    { name = "requests" },
+    { name = "tqdm" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/77/62/b13bad6e3f3b8527986793ba53ba9d4c10dd1fd6a74f8564fb26b2ce9c14/kagglehub-0.4.0.tar.gz", hash = "sha256:abed91c5b4736996f242f9ca4fc3bdf4d97b11c8b5a0a636ffb02db219a11b12", size = 114375, upload-time = "2026-01-08T15:20:25.477Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d4/0b/696bf3479afa593493be4a30416263e3a0677479306e8d7088fd95729987/kagglehub-0.4.0-py3-none-any.whl", hash = "sha256:1ba266dd87fe4934eb4de1a2ecfd10cc190228733e6d7852c04ba899adb02c67", size = 69187, upload-time = "2026-01-08T15:20:23.854Z" },
+]
+
+[[package]]
+name = "kagglesdk"
+version = "0.1.14"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "protobuf" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/cb/dc/48f4884f8bcd8e07c095492cae052146f4fd0852c98edfe211ab73107c68/kagglesdk-0.1.14.tar.gz", hash = "sha256:ac37d7d7fcb9cf92d37319ec65b433686ca5c2f0f28a434a1104855a5f9c24cc", size = 120533, upload-time = "2025-12-22T22:43:21.825Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d7/c9/4767e903e684b59708eb56649b7da19c29c4cc18f0f59f8f4947551ae316/kagglesdk-0.1.14-py3-none-any.whl", hash = "sha256:a06feff062d8a1344ca7d378bfccdee4fd6b0b1b4e236fdafe23fefb730ee17f", size = 159954, upload-time = "2025-12-22T22:43:20.79Z" },
+]
+
+[[package]]
 name = "kombu"
 version = "5.6.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1841,6 +1870,7 @@ dependencies = [
     { name = "dvc" },
     { name = "dvc-gdrive" },
     { name = "fastapi" },
+    { name = "kagglehub" },
     { name = "pandas" },
     { name = "torch", version = "2.9.1", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform == 'darwin'" },
     { name = "torch", version = "2.9.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform != 'darwin'" },
@@ -1866,6 +1896,7 @@ requires-dist = [
     { name = "dvc", specifier = ">=3.66.1" },
     { name = "dvc-gdrive", specifier = ">=3.0.1" },
     { name = "fastapi", specifier = "==0.128.0" },
+    { name = "kagglehub", specifier = ">=0.4.0" },
     { name = "pandas", specifier = ">=2.3.3" },
     { name = "torch", specifier = "==2.9.1", index = "https://download.pytorch.org/whl/cpu" },
     { name = "transformers", specifier = ">=4.57.5" },
