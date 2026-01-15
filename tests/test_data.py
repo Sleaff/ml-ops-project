@@ -2,6 +2,7 @@ from project.data import NewsDataset
 from torch.utils.data import Dataset
 from transformers import AutoTokenizer
 
+
 def test_news_dataset():
     """Test the NewsDataset class."""
 
