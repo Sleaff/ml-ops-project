@@ -1,6 +1,32 @@
 outs:
-- md5: 77103d12072c40846ccb62bc9aedc59b.dir
-  size: 231532623
-  nfiles: 4
-  hash: md5
+- hash: md5
   path: data
+  files:
+  - relpath: .gitignore
+    md5: 0f1d88d5adcd01cacdff1ed144500a0f
+    size: 16
+    cloud:
+      remote_storage:
+        etag: 08a2cfadb6e78d92031001
+        version_id: '1768489136908194'
+  - relpath: processed/news.csv
+    md5: 5d12ee254247e4fbf90ed125e4559e30
+    size: 115159791
+    cloud:
+      remote_storage:
+        etag: 08af9ea3b8e78d92031001
+        version_id: '1768489140932399'
+  - relpath: raw/Fake.csv
+    md5: edcb323a8ed3e9f4d5d84016553009eb
+    size: 62789876
+    cloud:
+      remote_storage:
+        etag: 089790d6b7e78d92031001
+        version_id: '1768489139669015'
+  - relpath: raw/True.csv
+    md5: 4c3c571205b62c7591c451cfe60d6af1
+    size: 53582940
+    cloud:
+      remote_storage:
+        etag: 08e6f8a7b7e78d92031001
+        version_id: '1768489138912358'
