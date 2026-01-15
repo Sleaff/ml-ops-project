@@ -9,14 +9,15 @@ from project.model import Model
 from project.data import MyDataset
 from pathlib import Path
 
+
 def train():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
 
     if not os.path.exists("data/processed/news.csv"):
-        dataset = MyDataset(Path('src/project/data/'))
-        dataset.preprocess(Path('data/processed/'))
+        dataset = MyDataset(Path("src/project/data/"))
+        dataset.preprocess(Path("data/processed/"))
 
     dataset = NewsDataset("data/processed/news.csv", tokenizer)
 
@@ -45,6 +46,7 @@ def train():
         optimizer.step()
 
     print("Training step completed")
+
 
 if __name__ == "__main__":
     train()
