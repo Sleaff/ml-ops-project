@@ -3,6 +3,9 @@ docs/site/
 # data
 data/
 
+# models (they are too big)
+models/
+
 # test cache
 manual_test/
 

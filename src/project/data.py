@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 import typer
 from torch.utils.data import Dataset
-
+import csv
 
 class MyDataset(Dataset):
     """Fake vs real news dataset."""

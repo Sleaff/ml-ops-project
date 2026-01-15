@@ -1,0 +1,77 @@
+_wandb:
+    value:
+        cli_version: 0.24.0
+        e:
+            6gey469hy6m164wcka166z1jzmq6xcqd:
+                args:
+                    - --lr
+                    - 2e-05,
+                    - --e
+                    - "10"
+                codePath: src/project/train.py
+                codePathLocal: src/project/train.py
+                cpu_count: 32
+                cpu_count_logical: 32
+                cudaVersion: "13.1"
+                disk:
+                    /:
+                        total: "76817485824"
+                        used: "7501303808"
+                email: vebjornskre@gmail.com
+                executable: /work3/s242723/ml-ops-project/.venv/bin/python3
+                git:
+                    commit: 3148ee85ab588b7cc0f3ed36be699987d6ebb29b
+                    remote: https://github.com/Sleaff/ml-ops-project.git
+                gpu: NVIDIA A100-PCIE-40GB
+                gpu_count: 2
+                gpu_nvidia:
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "42949672960"
+                      name: NVIDIA A100-PCIE-40GB
+                      uuid: GPU-a1e81f9a-2fae-802e-705d-7df8c66d9e31
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "42949672960"
+                      name: NVIDIA A100-PCIE-40GB
+                      uuid: GPU-10aad3f8-838d-0d66-3be3-716c30101530
+                host: n-62-12-19
+                memory:
+                    total: "810713120768"
+                os: Linux-6.1.159-1.el9.elrepo.x86_64-x86_64-with-glibc2.34
+                program: /work3/s242723/ml-ops-project/src/project/train.py
+                python: CPython 3.13.11
+                root: /work3/s242723/ml-ops-project
+                startedAt: "2026-01-15T16:16:22.588607Z"
+                writerId: 6gey469hy6m164wcka166z1jzmq6xcqd
+        m: []
+        python_version: 3.13.11
+        t:
+            "1":
+                - 1
+                - 5
+                - 11
+                - 49
+                - 53
+            "2":
+                - 1
+                - 5
+                - 11
+                - 49
+                - 53
+            "3":
+                - 1
+                - 16
+            "4": 3.13.11
+            "5": 0.24.0
+            "6": 4.57.5
+            "12": 0.24.0
+            "13": linux-x86_64
+architecture:
+    value: DistilBert
+batch_size:
+    value: 64
+epochs:
+    value: 10
+learning_rate:
+    value: 2e-05

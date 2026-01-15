@@ -1,0 +1,53 @@
+{
+  "os": "Linux-6.1.159-1.el9.elrepo.x86_64-x86_64-with-glibc2.34",
+  "python": "CPython 3.13.11",
+  "startedAt": "2026-01-15T15:32:20.720177Z",
+  "args": [
+    "--lr",
+    "2e-05,",
+    "--e",
+    "30"
+  ],
+  "program": "/work3/s242723/ml-ops-project/src/project/train.py",
+  "codePath": "src/project/train.py",
+  "codePathLocal": "src/project/train.py",
+  "git": {
+    "remote": "https://github.com/Sleaff/ml-ops-project.git",
+    "commit": "3148ee85ab588b7cc0f3ed36be699987d6ebb29b"
+  },
+  "email": "vebjornskre@gmail.com",
+  "root": "/work3/s242723/ml-ops-project",
+  "host": "n-62-12-19",
+  "executable": "/work3/s242723/ml-ops-project/.venv/bin/python3",
+  "cpu_count": 32,
+  "cpu_count_logical": 32,
+  "gpu": "NVIDIA A100-PCIE-40GB",
+  "gpu_count": 2,
+  "disk": {
+    "/": {
+      "total": "76817485824",
+      "used": "7501049856"
+    }
+  },
+  "memory": {
+    "total": "810713120768"
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA A100-PCIE-40GB",
+      "memoryTotal": "42949672960",
+      "cudaCores": 6912,
+      "architecture": "Ampere",
+      "uuid": "GPU-a1e81f9a-2fae-802e-705d-7df8c66d9e31"
+    },
+    {
+      "name": "NVIDIA A100-PCIE-40GB",
+      "memoryTotal": "42949672960",
+      "cudaCores": 6912,
+      "architecture": "Ampere",
+      "uuid": "GPU-10aad3f8-838d-0d66-3be3-716c30101530"
+    }
+  ],
+  "cudaVersion": "13.1",
+  "writerId": "b7aj87j0if3amltpqlsdegp4ua1rfmxe"
+}

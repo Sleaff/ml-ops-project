@@ -1,0 +1,51 @@
+_wandb:
+    value:
+        cli_version: 0.24.0
+        e:
+            jddp8js1r8uz2rjxefoe0q5yk415v75p:
+                codePath: src/project/train.py
+                codePathLocal: src/project/train.py
+                cpu_count: 24
+                cpu_count_logical: 48
+                disk:
+                    /:
+                        total: "76817485824"
+                        used: "6008033280"
+                email: vebjornskre@gmail.com
+                executable: /work3/s242723/ml-ops-project/.venv/bin/python3
+                git:
+                    commit: 3148ee85ab588b7cc0f3ed36be699987d6ebb29b
+                    remote: https://github.com/Sleaff/ml-ops-project.git
+                host: n-62-27-17
+                memory:
+                    total: "269807996928"
+                os: Linux-6.1.159-1.el9.elrepo.x86_64-x86_64-with-glibc2.34
+                program: /work3/s242723/ml-ops-project/src/project/train.py
+                python: CPython 3.13.11
+                root: /work3/s242723/ml-ops-project
+                startedAt: "2026-01-15T16:15:00.395401Z"
+                writerId: jddp8js1r8uz2rjxefoe0q5yk415v75p
+        m: []
+        python_version: 3.13.11
+        t:
+            "1":
+                - 1
+                - 5
+                - 11
+                - 49
+                - 53
+            "3":
+                - 16
+            "4": 3.13.11
+            "5": 0.24.0
+            "6": 4.57.5
+            "12": 0.24.0
+            "13": linux-x86_64
+architecture:
+    value: DistilBert
+batch_size:
+    value: 64
+epochs:
+    value: 10
+learning_rate:
+    value: 2e-05

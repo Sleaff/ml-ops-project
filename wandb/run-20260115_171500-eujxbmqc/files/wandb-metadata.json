@@ -1,0 +1,28 @@
+{
+  "os": "Linux-6.1.159-1.el9.elrepo.x86_64-x86_64-with-glibc2.34",
+  "python": "CPython 3.13.11",
+  "startedAt": "2026-01-15T16:15:00.395401Z",
+  "program": "/work3/s242723/ml-ops-project/src/project/train.py",
+  "codePath": "src/project/train.py",
+  "codePathLocal": "src/project/train.py",
+  "git": {
+    "remote": "https://github.com/Sleaff/ml-ops-project.git",
+    "commit": "3148ee85ab588b7cc0f3ed36be699987d6ebb29b"
+  },
+  "email": "vebjornskre@gmail.com",
+  "root": "/work3/s242723/ml-ops-project",
+  "host": "n-62-27-17",
+  "executable": "/work3/s242723/ml-ops-project/.venv/bin/python3",
+  "cpu_count": 24,
+  "cpu_count_logical": 48,
+  "disk": {
+    "/": {
+      "total": "76817485824",
+      "used": "6008033280"
+    }
+  },
+  "memory": {
+    "total": "269807996928"
+  },
+  "writerId": "jddp8js1r8uz2rjxefoe0q5yk415v75p"
+}
