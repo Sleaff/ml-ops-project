@@ -1,4 +1,4 @@
-from project.data import NewsDataset
+from project.dataset import NewsDataset
 from torch.utils.data import Dataset
 from transformers import AutoTokenizer
 
