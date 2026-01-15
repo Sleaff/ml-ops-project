@@ -17,7 +17,7 @@ The goal for this project is to learn the frameworks around ML-ops. Our group co
 
 https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset
 
-We propse a project to classify news. We have identified a dataset which includes two types of classes. One with fake news and one with true news. The dataset is mostly pure text but also includes other features such as the type of news and the date the text was published. The dataset includes 17903 unqiue datapoints. 
+We propse a project to classify news. We have identified a dataset which includes two types of classes. One with fake news and one with true news. The dataset is mostly pure text but also includes other features such as the type of news and the date the text was published. The dataset includes 17903 unqiue datapoints.
 
 ## The models
 
