@@ -61,4 +61,18 @@ lint.select = ["I"]
 line-length = 120
 
 [tool.coverage.run]
-omit = ["tests/*"]
+omit = [
+    "tests/*",
+    "*/site-packages/*",
+    "*/.venv/*",
+    "/tmp/*"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
