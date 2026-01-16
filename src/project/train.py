@@ -11,9 +11,20 @@ from transformers import AutoTokenizer
 from project.data import MyDataset
 from project.dataset import NewsDataset
 from project.model import Model
+from pytorch_lightning.loggers import WandbLogger
+import typer
 
 
-def train(checkpoint_path: Path | None = None, epochs: int = 10, train_amount: float = 1.0):
+def train(
+    checkpoint_path: Path | None = None, 
+    epochs: int = 10, 
+    train_amount: float = 1.0, 
+    lr: float = 2e-5,
+    batch_size: int = 8
+    ):
+
+    torch.set_float32_matmul_precision('medium')
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Device: {device}")
 
@@ -31,19 +42,32 @@ def train(checkpoint_path: Path | None = None, epochs: int = 10, train_amount: f
     val_size = len(dataset) - train_size
     train_ds, val_ds = random_split(dataset, [train_size, val_size])
 
-    train_loader = DataLoader(train_ds, batch_size=8, shuffle=True)
-    val_loader = DataLoader(val_ds, batch_size=8, shuffle=True)
+    train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True)
+    val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=True)
 
-    model = Model().to(device)
+    model = Model(lr=lr).to(device)
+    model.train()
 
     checkpoint_callback = ModelCheckpoint(
         dirpath=save_dir,
         filename="best_model_{epoch:02d}_{val_loss:.4f}",
-        monitor="val_loss",
+        monitor="loss/val_loss",
         mode="min",
         save_top_k=1,
         save_last=True,
     )
+
+    wandb_logger = WandbLogger(
+        project="news-classification", 
+        log_model="all",
+        entity="vebjornskre-danmarks-tekniske-universitet-dtu"
+    )
+    wandb_logger.log_hyperparams({
+        "epochs": epochs, 
+        "train_amount": train_amount, 
+        "learning_rate": lr,
+        "batch_size": batch_size
+        })
 
     trainer = pl.Trainer(
         accelerator="auto",
@@ -54,13 +78,13 @@ def train(checkpoint_path: Path | None = None, epochs: int = 10, train_amount: f
         default_root_dir=save_dir,
         enable_progress_bar=True,
         log_every_n_steps=10,
+        logger=wandb_logger,
     )
 
     if checkpoint_path is not None:
         trainer.fit(model, train_loader, val_loader, ckpt_path=checkpoint_path)
     else:
         trainer.fit(model, train_loader, val_loader)
-
     return 1
 
 

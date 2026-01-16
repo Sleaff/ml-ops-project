@@ -3,7 +3,7 @@ docs/site/
 CLAUDE.md
 
 # data
-# data/
+src/project/data/
 
 # models (they are too big)
 models/
