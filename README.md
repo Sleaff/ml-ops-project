@@ -17,8 +17,14 @@ The goal for this project is to learn the frameworks around ML-ops. Our group co
 
 https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset
 
-We propse a project to classify news. We have identified a dataset which includes two types of classes. One with fake news and one with true news. The dataset is mostly pure text but also includes other features such as the type of news and the date the text was published. The dataset includes 17903 unqiue datapoints. 
+We propse a project to classify news. We have identified a dataset which includes two types of classes. One with fake news and one with true news. The dataset is mostly pure text but also includes other features such as the type of news and the date the text was published. The dataset includes 17903 unqiue datapoints.
 
 ## The models
 
 For the model we will try to use a BERT model. BERT is a language model from google which only uses the encoder part of a transformer architecture. We expect the model to do well on the task after we fine tune since it had a huge impact on the NLP field when it came out.
+
+## Google drive
+
+Data used and model can be found here:
+
+https://drive.google.com/drive/folders/1hMOLYBrIgZx8Rt_HkMGnNt8k7VrpikL_

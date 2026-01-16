@@ -1,7 +1,11 @@
+import argparse
+import os
+from pathlib import Path
+
+import pytorch_lightning as pl
 import torch
-from torch import nn, optim
+from pytorch_lightning.callbacks import ModelCheckpoint
 from torch.utils.data import DataLoader, random_split
-from tqdm import tqdm
 from transformers import AutoTokenizer
 
 # from project.dataset import NewsDataset
@@ -23,7 +27,14 @@ def train(lr: float = 2e-5, epochs : int = 10, batch_size : int = 64) -> None:
     print(f'Device: {device}')
 
     tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
-    dataset = NewsDataset("data/processed/news.csv", tokenizer)
+
+    if not os.path.exists("src/project/data/processed/news.csv"):
+        dataset = MyDataset(Path("src/project/data/"))
+        dataset.preprocess(Path("src/project/data/processed/"))
+
+    dataset = NewsDataset("src/project/data/processed/news.csv", tokenizer)
+    save_dir = Path("src/project/models")
+    save_dir.mkdir(parents=True, exist_ok=True)
 
     wandb_project = os.getenv("WANDB_PROJECT")
     wandb_entity = os.getenv("WANDB_ENTITY")
@@ -148,4 +159,29 @@ def train(lr: float = 2e-5, epochs : int = 10, batch_size : int = 64) -> None:
     run.finish()
 
 if __name__ == "__main__":
-    train()
+    parser = argparse.ArgumentParser(description="Train news classification model")
+    parser.add_argument(
+        "--checkpoint-path",
+        type=str,
+        default=None,
+        help="Path to checkpoint file to load (default: src/project/models/latest_checkpoint.pt)",
+    )
+    parser.add_argument(
+        "--epochs",
+        type=int,
+        default=10,
+        help="Number of training epochs",
+    )
+    parser.add_argument(
+        "--training-size",
+        type=float,
+        default=1.0,
+        help="amount of training data to use",
+    )
+    args = parser.parse_args()
+
+    train(
+        checkpoint_path=args.checkpoint_path,
+        epochs=args.epochs,
+        train_amount=args.training_size,
+    )
