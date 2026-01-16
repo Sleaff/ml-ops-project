@@ -5,9 +5,7 @@ from pathlib import Path
 import pytorch_lightning as pl
 import torch
 from pytorch_lightning.callbacks import ModelCheckpoint
-from torch import nn, optim
 from torch.utils.data import DataLoader, random_split
-from tqdm import tqdm
 from transformers import AutoTokenizer
 
 from project.data import MyDataset
@@ -15,7 +13,7 @@ from project.dataset import NewsDataset
 from project.model import Model
 
 
-def train(checkpoint_path: Path | None = None, epochs=10, train_amount=1):
+def train(checkpoint_path: Path | None = None, epochs: int = 10, train_amount: float = 1.0):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
@@ -36,8 +34,6 @@ def train(checkpoint_path: Path | None = None, epochs=10, train_amount=1):
     val_loader = DataLoader(val_ds, batch_size=8, shuffle=True)
 
     model = Model().to(device)
-    # criterion = nn.BCEWithLogitsLoss()
-    # optimizer = optim.AdamW(model.parameters(), lr=2e-5)
 
     checkpoint_callback = ModelCheckpoint(
         dirpath=save_dir,
@@ -63,6 +59,8 @@ def train(checkpoint_path: Path | None = None, epochs=10, train_amount=1):
         trainer.fit(model, train_loader, val_loader, ckpt_path=checkpoint_path)
     else:
         trainer.fit(model, train_loader, val_loader)
+
+    return 1
 
 
 if __name__ == "__main__":
