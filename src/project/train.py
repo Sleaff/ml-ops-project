@@ -61,7 +61,7 @@ def train(checkpoint_path: Path | None = None, epochs: int = 10, train_amount: f
     else:
         trainer.fit(model, train_loader, val_loader)
 
-    run.finish()
+    return 1
 
 
 if __name__ == "__main__":
