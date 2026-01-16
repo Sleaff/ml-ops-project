@@ -1,117 +1,108 @@
-import argparse
+import logging
 import os
 from pathlib import Path
 
+import hydra
 import pytorch_lightning as pl
 import torch
+from omegaconf import DictConfig
 from pytorch_lightning.callbacks import ModelCheckpoint
+from pytorch_lightning.loggers import WandbLogger
 from torch.utils.data import DataLoader, random_split
 from transformers import AutoTokenizer
 
 from project.data import MyDataset
 from project.dataset import NewsDataset
 from project.model import Model
-from pytorch_lightning.loggers import WandbLogger
-import typer
+
+log = logging.getLogger(__name__)
 
 
-def train(
-    checkpoint_path: Path | None = None, 
-    epochs: int = 10, 
-    train_amount: float = 1.0, 
-    lr: float = 2e-5,
-    batch_size: int = 8
-    ):
+def train(cfg: DictConfig) -> None:
+    # Get original working directory (Hydra changes cwd to outputs folder)
+    orig_cwd = hydra.utils.get_original_cwd()
 
-    torch.set_float32_matmul_precision('medium')
+    # Set seed for reproducibility
+    pl.seed_everything(cfg.seed, workers=True)
+    log.info(f"Set random seed to {cfg.seed}")
+
+    torch.set_float32_matmul_precision("medium")
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Device: {device}")
+    log.info(f"Using device: {device}")
 
-    tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
+    tokenizer = AutoTokenizer.from_pretrained(cfg.model_name)
 
-    if not os.path.exists("src/project/data/processed/news.csv"):
-        dataset = MyDataset(Path("src/project/data/"))
-        dataset.preprocess(Path("src/project/data/processed/"))
+    # Use absolute paths (relative to original cwd)
+    processed_path = os.path.join(orig_cwd, cfg.processed_data_path)
+    data_path = os.path.join(orig_cwd, cfg.data_path)
+    save_dir = Path(os.path.join(orig_cwd, cfg.save_dir))
 
-    dataset = NewsDataset("src/project/data/processed/news.csv", tokenizer)
-    save_dir = Path("src/project/models")
+    if not os.path.exists(processed_path):
+        log.info("Preprocessing data...")
+        dataset = MyDataset(Path(data_path))
+        dataset.preprocess(Path(data_path) / "processed")
+
+    dataset = NewsDataset(processed_path, tokenizer, max_length=cfg.max_length)
     save_dir.mkdir(parents=True, exist_ok=True)
 
-    train_size = int(0.8 * len(dataset))
+    train_size = int(cfg.train_split * len(dataset))
     val_size = len(dataset) - train_size
     train_ds, val_ds = random_split(dataset, [train_size, val_size])
+    log.info(f"Dataset split: {train_size} train, {val_size} val")
 
-    train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True)
-    val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=True)
+    train_loader = DataLoader(train_ds, batch_size=cfg.batch_size, shuffle=True)
+    val_loader = DataLoader(val_ds, batch_size=cfg.batch_size, shuffle=False)
 
-    model = Model(lr=lr).to(device)
-    model.train()
+    model = Model(model_name=cfg.model_name, lr=cfg.lr).to(device)
+    log.info(f"Model: {cfg.model_name}, lr: {cfg.lr}")
 
     checkpoint_callback = ModelCheckpoint(
         dirpath=save_dir,
         filename="best_model_{epoch:02d}_{val_loss:.4f}",
         monitor="loss/val_loss",
         mode="min",
-        save_top_k=1,
+        save_top_k=cfg.save_top_k,
         save_last=True,
     )
 
     wandb_logger = WandbLogger(
-        project="news-classification", 
+        project=cfg.wandb_project,
+        entity=cfg.wandb_entity,
         log_model="all",
-        entity="vebjornskre-danmarks-tekniske-universitet-dtu"
     )
-    wandb_logger.log_hyperparams({
-        "epochs": epochs, 
-        "train_amount": train_amount, 
-        "learning_rate": lr,
-        "batch_size": batch_size
-        })
 
     trainer = pl.Trainer(
         accelerator="auto",
         devices=1,
-        max_epochs=epochs,
-        limit_train_batches=train_amount,
+        max_epochs=cfg.epochs,
+        limit_train_batches=cfg.limit_train_batches,
         callbacks=[checkpoint_callback],
         default_root_dir=save_dir,
         enable_progress_bar=True,
-        log_every_n_steps=10,
+        log_every_n_steps=cfg.log_every_n_steps,
         logger=wandb_logger,
+        deterministic=True,
     )
 
+    checkpoint_path = None
+    if cfg.checkpoint_path is not None:
+        checkpoint_path = os.path.join(orig_cwd, cfg.checkpoint_path)
+
+    log.info(f"Starting training for {cfg.epochs} epochs")
     if checkpoint_path is not None:
         trainer.fit(model, train_loader, val_loader, ckpt_path=checkpoint_path)
     else:
         trainer.fit(model, train_loader, val_loader)
-    return 1
+
+    log.info("Training complete!")
+
+
+@hydra.main(config_path="../../configs", config_name="config", version_base=None)
+def main(cfg: DictConfig) -> None:
+    log.info(f"Configuration:\n{cfg}")
+    train(cfg)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Train news classification model")
-    parser.add_argument(
-        "--checkpoint-path",
-        type=str,
-        default=None,
-        help="Path to checkpoint file to load (default: src/project/models/latest_checkpoint.pt)",
-    )
-    parser.add_argument(
-        "--epochs",
-        type=int,
-        default=10,
-        help="Number of training epochs",
-    )
-    parser.add_argument(
-        "--training-size",
-        type=float,
-        default=1.0,
-        help="amount of training data to use",
-    )
-    args = parser.parse_args()
-
-    train(
-        checkpoint_path=args.checkpoint_path,
-        epochs=args.epochs,
-        train_amount=args.training_size,
-    )
+    main()

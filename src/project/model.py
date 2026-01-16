@@ -7,11 +7,7 @@ from transformers import AutoModel
 class Model(pl.LightningModule):
     """Binary text classification model."""
 
-    def __init__(
-        self, 
-        model_name: str = "distilbert-base-uncased", 
-        lr: float = 2e-5
-        ):
+    def __init__(self, model_name: str = "distilbert-base-uncased", lr: float = 2e-5):
         super().__init__()
         self.encoder = AutoModel.from_pretrained(model_name)
 
