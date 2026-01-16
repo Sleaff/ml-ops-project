@@ -20,6 +20,7 @@ def test_model():
     tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
     dataset = NewsDataset(csv_data, tokenizer)
     data_loader = DataLoader(dataset)
+
     assert torch.any(data_loader.dataset[0]["input_ids"]), "Data error"
     assert data_loader.batch_size == 1, "Batch size error"
 
