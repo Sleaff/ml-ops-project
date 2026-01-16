@@ -5,6 +5,9 @@ CLAUDE.md
 # data
 # data/
 
+# models (they are too big)
+models/
+
 # test cache
 manual_test/
 
@@ -24,7 +27,8 @@ manual_test/
 __pycache__/
 *.py[cod]
 *$py.class
-
+wandb/
+src/project/data/
 # C extensions
 *.so
 

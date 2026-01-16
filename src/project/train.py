@@ -15,6 +15,7 @@ from project.model import Model
 
 def train(checkpoint_path: Path | None = None, epochs: int = 10, train_amount: float = 1.0):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Device: {device}")
 
     tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
 
@@ -60,7 +61,7 @@ def train(checkpoint_path: Path | None = None, epochs: int = 10, train_amount: f
     else:
         trainer.fit(model, train_loader, val_loader)
 
-    return 1
+    run.finish()
 
 
 if __name__ == "__main__":
