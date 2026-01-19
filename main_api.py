@@ -1,8 +1,6 @@
 from fastapi import FastAPI
 from project.model import model
 
-# from project.evaluate import
-
 app = FastAPI()
 
 
