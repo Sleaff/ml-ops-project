@@ -61,6 +61,16 @@ class Model(pl.LightningModule):
 
         return loss
 
+    def test_step(self, batch) -> torch.Tensor:
+        input_ids = batch["input_ids"]
+        attention_mask = batch["attention_mask"]
+
+        logits = self(input_ids, attention_mask)
+
+        preds = (torch.sigmoid(logits) > 0.5).float()
+
+        return preds
+
     def configure_optimizers(self):
         return torch.optim.AdamW(self.classifier.parameters(), lr=self.lr)
 
