@@ -1,7 +1,7 @@
 import os
 from io import StringIO
 from pathlib import Path
-from typing import Any, Mapping, Union
+from typing import Any, Union
 
 import pytorch_lightning as pl
 import torch
@@ -34,7 +34,7 @@ def predict(in_data: str) -> Union[list[Any], list[list[Any]], None]:
         devices=1,
         logger=False,
         enable_checkpointing=False,
-        enable_progress_bar=True,
+        enable_progress_bar=False,
     )
 
     out = trainer.predict(model, dataloaders=data_loader, ckpt_path=ckpt)
