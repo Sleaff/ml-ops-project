@@ -1,0 +1,28 @@
+FIT Profiler Report
+Profile stats for: records
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                          ProfilerStep*         2.85%       1.488ms        99.95%      52.175ms      26.088ms       0.000us         0.00%      13.056ms       6.528ms             2  
+[pl][profile][Strategy]SingleDeviceStrategy.validati...         5.31%       2.773ms        86.03%      44.908ms      22.454ms       0.000us         0.00%      13.016ms       6.508ms             2  
+[pl][module]transformers.models.distilbert.modeling_...         0.98%     509.149us        76.33%      39.845ms      19.922ms       0.000us         0.00%      12.785ms       6.392ms             2  
+[pl][module]transformers.models.distilbert.modeling_...         0.95%     495.833us        71.05%      37.089ms      18.544ms       0.000us         0.00%      12.466ms       6.233ms             2  
+                                           aten::linear         1.11%     577.702us        34.47%      17.993ms     243.144us       0.000us         0.00%       8.236ms     111.300us            74  
+                                            aten::addmm        25.82%      13.480ms        31.55%      16.469ms     222.556us       7.933ms        60.76%       8.236ms     111.300us            74  
+void cutlass::Kernel2<cutlass_80_tensorop_s1688gemm_...         0.00%       0.000us         0.00%       0.000us       0.000us       6.074ms        46.53%       6.074ms     101.241us            60  
+[pl][profile][Strategy]SingleDeviceStrategy.validati...         0.00%       0.000us         0.00%       0.000us       0.000us       3.250ms        24.90%       3.250ms       1.625ms             2  
+                     aten::scaled_dot_product_attention         0.38%     200.730us         2.54%       1.326ms     110.515us       0.000us         0.00%       2.531ms     210.957us            12  
+          aten::_scaled_dot_product_efficient_attention         0.24%     126.150us         2.10%       1.097ms      91.430us       0.000us         0.00%       2.531ms     210.957us            12  
+                     aten::_efficient_attention_forward         0.40%     209.361us         1.70%     886.361us      73.863us       2.429ms        18.61%       2.531ms     210.957us            12  
+[pl][module]transformers.models.distilbert.modeling_...         0.00%       0.000us         0.00%       0.000us       0.000us       2.447ms        18.75%       2.447ms       1.224ms             2  
+fmha_cutlassF_f32_aligned_64x64_rf_sm80(PyTorchMemEf...         0.00%       0.000us         0.00%       0.000us       0.000us       2.429ms        18.61%       2.429ms     202.452us            12  
+[pl][module]transformers.models.distilbert.modeling_...         0.00%       0.000us         0.00%       0.000us       0.000us       2.420ms        18.54%       2.420ms       1.210ms             2  
+[pl][module]transformers.models.distilbert.modeling_...         0.00%       0.000us         0.00%       0.000us       0.000us       2.387ms        18.28%       2.387ms       1.193ms             2  
+[pl][module]transformers.models.distilbert.modeling_...         0.00%       0.000us         0.00%       0.000us       0.000us       2.370ms        18.16%       2.370ms       1.185ms             2  
+[pl][module]transformers.models.distilbert.modeling_...         0.00%       0.000us         0.00%       0.000us       0.000us       2.329ms        17.84%       2.329ms       1.165ms             2  
+[pl][module]transformers.models.distilbert.modeling_...         0.00%       0.000us         0.00%       0.000us       0.000us       2.165ms        16.59%       2.165ms       1.083ms             2  
+[pl][module]transformers.models.distilbert.modeling_...         0.56%     291.909us        11.54%       6.024ms       3.012ms       0.000us         0.00%       2.079ms       1.040ms             2  
+[pl][module]transformers.models.distilbert.modeling_...         0.71%     370.326us        11.60%       6.054ms       3.027ms       0.000us         0.00%       2.078ms       1.039ms             2  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 52.199ms
+Self CUDA time total: 13.056ms
