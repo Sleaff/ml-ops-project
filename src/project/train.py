@@ -8,7 +8,7 @@ import torch
 from omegaconf import DictConfig
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import WandbLogger
-from pytorch_lightning.profilers import SimpleProfiler, PyTorchProfiler, AdvancedProfiler
+from pytorch_lightning.profilers import AdvancedProfiler, PyTorchProfiler, SimpleProfiler
 from torch.utils.data import DataLoader, random_split
 from transformers import AutoTokenizer
 
@@ -52,8 +52,12 @@ def train(cfg: DictConfig) -> None:
     train_ds, val_ds = random_split(dataset, [train_size, val_size])
     log.info(f"Dataset split: {train_size} train, {val_size} val")
 
-    train_loader = DataLoader(train_ds, batch_size=cfg.batch_size, shuffle=True, num_workers=cfg.num_workers, pin_memory=True)
-    val_loader = DataLoader(val_ds, batch_size=cfg.batch_size, shuffle=False, num_workers=cfg.num_workers, pin_memory=True)
+    train_loader = DataLoader(
+        train_ds, batch_size=cfg.batch_size, shuffle=True, num_workers=cfg.num_workers, pin_memory=True
+    )
+    val_loader = DataLoader(
+        val_ds, batch_size=cfg.batch_size, shuffle=False, num_workers=cfg.num_workers, pin_memory=True
+    )
 
     model = Model(model_name=cfg.model_name, lr=cfg.lr).to(device)
     log.info(f"Model: {cfg.model_name}, lr: {cfg.lr}")
@@ -79,14 +83,16 @@ def train(cfg: DictConfig) -> None:
     # Profiler
     profiler = None
     if cfg.get("profiler_path") is not None:
-        
         abs_prof_path = os.path.join(orig_cwd, cfg.profiler_path)
 
         os.makedirs(abs_prof_path, exist_ok=True)
 
-        if cfg.profiler_type=='simple': profiler = SimpleProfiler(dirpath=abs_prof_path, filename=f"{cfg.profiler_type}_profile_results")
-        if cfg.profiler_type=='pytorch': profiler = PyTorchProfiler(dirpath=abs_prof_path, filename=f"{cfg.profiler_type}_profile_results")
-        if cfg.profiler_type=='advanced': profiler = AdvancedProfiler(dirpath=abs_prof_path, filename=f"{cfg.profiler_type}_profile_results")
+        if cfg.profiler_type == "simple":
+            profiler = SimpleProfiler(dirpath=abs_prof_path, filename=f"{cfg.profiler_type}_profile_results")
+        if cfg.profiler_type == "pytorch":
+            profiler = PyTorchProfiler(dirpath=abs_prof_path, filename=f"{cfg.profiler_type}_profile_results")
+        if cfg.profiler_type == "advanced":
+            profiler = AdvancedProfiler(dirpath=abs_prof_path, filename=f"{cfg.profiler_type}_profile_results")
 
     trainer = pl.Trainer(
         accelerator="auto",
@@ -99,7 +105,7 @@ def train(cfg: DictConfig) -> None:
         log_every_n_steps=cfg.log_every_n_steps,
         logger=wandb_logger,
         deterministic=True,
-        profiler=profiler
+        profiler=profiler,
     )
 
     checkpoint_path = None
