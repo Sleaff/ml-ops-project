@@ -27,4 +27,4 @@ For the model we will try to use a BERT model. BERT is a language model from goo
 
 Data used and model can be found here:
 
-https://drive.google.com/drive/folders/1hMOLYBrIgZx8Rt_HkMGnNt8k7VrpikL_
+https://drive.google.com/drive/folders/1hMOLYBrIgZx8Rt_HkMGnNt8k7VrpikL_?usp=sharing
