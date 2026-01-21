@@ -85,7 +85,7 @@ colorama==0.4.6
     #   tqdm
 configobj==5.0.9
     # via dvc
-coverage==7.6.9
+coverage==7.13.1
 cryptography==43.0.3
     # via
     #   asyncssh
