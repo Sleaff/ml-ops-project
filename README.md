@@ -46,7 +46,7 @@ This project supports distributed training on Google Cloud Platform (GCP) using 
 ### Prerequisites
 
 1. **GCP Project Setup**
-   - Project ID: `dtu-mlops-news`
+   - Project ID: `mlops-483515`
    - Region: `europe-west1-b`
    - Ensure you have appropriate IAM permissions (Compute Admin, Storage Admin, Cloud Build Editor)
 
@@ -57,7 +57,7 @@ This project supports distributed training on Google Cloud Platform (GCP) using 
 3. **Authentication**
    ```bash
    gcloud auth login
-   gcloud config set project dtu-mlops-news
+   gcloud config set project mlops-483515
    ```
 
 ### One-Time Setup
@@ -78,11 +78,11 @@ Creates a VM with:
 uv run invoke gcloud-upload-data
 ```
 
-Uploads data from `data/raw/` and `data/processed/` to GCS bucket `gs://dtu-mlops-news-data/`.
+Uploads data from `data/raw/` and `data/processed/` to GCS bucket `gs://sleaff_mlops_data_bucket/`.
 
 #### 3. Install Docker on VM (First Time Only)
 ```bash
-gcloud compute ssh mlops-training-vm --zone=europe-west1-b --project=dtu-mlops-news
+gcloud compute ssh mlops-training-vm --zone=europe-west1-b --project=mlops-483515
 sudo apt-get update && sudo apt-get install -y docker.io
 sudo systemctl start docker
 sudo usermod -aG docker $USER
@@ -101,7 +101,7 @@ uv run invoke gcloud-build-push
 ```
 
 - Builds training image using Cloud Build (takes ~2-3 minutes)
-- Pushes to `gcr.io/dtu-mlops-news/train:latest`
+- Pushes to `gcr.io/mlops-483515/train:latest`
 - No local Docker installation required
 - Uses `cloudbuild.yaml` configuration
 
@@ -125,7 +125,7 @@ What happens:
 uv run invoke gcloud-download-models
 ```
 
-Downloads all model checkpoints from `gs://dtu-mlops-news-data/models/` to local `models/` directory.
+Downloads all model checkpoints from `gs://sleaff_mlops_data_bucket/src/project/models/` to local `models/` directory.
 
 **4. Stop VM to Save Costs**
 ```bash
@@ -163,13 +163,13 @@ Training logs automatically stream to your terminal when running `uv run invoke 
 #### Option 2: Live Docker Logs
 While training is running, view live logs from another terminal:
 ```bash
-gcloud compute ssh mlops-training-vm --zone=europe-west1-b --project=dtu-mlops-news \
+gcloud compute ssh mlops-training-vm --zone=europe-west1-b --project=mlops-483515 \
   --command="docker logs -f \$(docker ps -q)"
 ```
 
 #### Option 3: GCP Cloud Logging
 View logs in GCP Console:
-- Navigate to: https://console.cloud.google.com/logs/query?project=dtu-mlops-news
+- Navigate to: https://console.cloud.google.com/logs/query?project=mlops-483515
 - Filter: `resource.type="gce_instance"` and `resource.labels.instance_id="mlops-training-vm"`
 
 #### Option 4: Weights & Biases Dashboard
@@ -180,11 +180,11 @@ If W&B is configured, view real-time metrics, system stats, and experiment compa
 All GCP settings are defined in `tasks.py`:
 
 ```python
-GCP_PROJECT = "dtu-mlops-news"
+GCP_PROJECT = "mlops-483515"
 GCP_ZONE = "europe-west1-b"
 GCP_VM_NAME = "mlops-training-vm"
 GCP_IMAGE_NAME = f"gcr.io/{GCP_PROJECT}/train:latest"
-GCS_BUCKET = "gs://dtu-mlops-news-data"
+GCS_BUCKET = "gs://sleaff_mlops_data_bucket"
 ```
 
 Training hyperparameters are configured in `configs/config.yaml`:
@@ -229,7 +229,7 @@ Training script (`scripts/train_cloud.sh`) workflow:
 
 **VM doesn't have Docker**
 ```bash
-gcloud compute ssh mlops-training-vm --zone=europe-west1-b --project=dtu-mlops-news
+gcloud compute ssh mlops-training-vm --zone=europe-west1-b --project=mlops-483515
 sudo apt-get update && sudo apt-get install -y docker.io
 sudo systemctl start docker
 sudo usermod -aG docker $USER
@@ -238,7 +238,7 @@ exit
 
 **Docker authentication fails**
 ```bash
-gcloud compute ssh mlops-training-vm --zone=europe-west1-b --project=dtu-mlops-news \
+gcloud compute ssh mlops-training-vm --zone=europe-west1-b --project=mlops-483515 \
   --command="gcloud auth configure-docker gcr.io --quiet"
 ```
 
@@ -314,15 +314,15 @@ uv run invoke gcloud-stop-vm
 
 **Check VM status:**
 ```bash
-gcloud compute instances list --project=dtu-mlops-news
+gcloud compute instances list --project=mlops-483515
 ```
 
 **SSH into VM:**
 ```bash
-gcloud compute ssh mlops-training-vm --zone=europe-west1-b --project=dtu-mlops-news
+gcloud compute ssh mlops-training-vm --zone=europe-west1-b --project=mlops-483515
 ```
 
 **View GCS bucket contents:**
 ```bash
-gsutil ls -r gs://dtu-mlops-news-data/
+gsutil ls -r gs://sleaff_mlops_data_bucket/
 ```

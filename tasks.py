@@ -7,11 +7,11 @@ PROJECT_NAME = "project"
 PYTHON_VERSION = "3.12"
 
 # GCP Configuration
-GCP_PROJECT = "dtu-mlops-news"
+GCP_PROJECT = "mlops-483515"
 GCP_ZONE = "europe-west1-b"
 GCP_VM_NAME = "mlops-training-vm"
 GCP_IMAGE_NAME = f"gcr.io/{GCP_PROJECT}/train:latest"
-GCS_BUCKET = "gs://dtu-mlops-news-data"
+GCS_BUCKET = "gs://sleaff_mlops_data_bucket"
 
 
 # Project commands
@@ -147,4 +147,4 @@ def gcloud_upload_data(ctx: Context) -> None:
 def gcloud_download_models(ctx: Context) -> None:
     """Download trained models from GCS bucket."""
     ctx.run("mkdir -p models", echo=True, pty=not WINDOWS)
-    ctx.run(f"gsutil -m cp -r {GCS_BUCKET}/models/* models/", echo=True, pty=not WINDOWS)
+    ctx.run(f"gsutil -m cp -r {GCS_BUCKET}/src/project/models/* models/", echo=True, pty=not WINDOWS)

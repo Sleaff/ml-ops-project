@@ -2,7 +2,7 @@
 set -e
 
 # GCS bucket configuration
-GCS_BUCKET="gs://dtu-mlops-news-data"
+GCS_BUCKET="gs://sleaff_mlops_data_bucket"
 
 echo "=== Cloud Training Script ==="
 
@@ -26,6 +26,6 @@ uv run src/project/train.py \
 
 # 3. Upload checkpoints to GCS
 echo "Uploading models to GCS..."
-gsutil -m cp -r /models/* "${GCS_BUCKET}/models/"
+gsutil -m cp -r /models/* "${GCS_BUCKET}/src/project/models/"
 
 echo "=== Training complete ==="
