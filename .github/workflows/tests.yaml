@@ -29,7 +29,7 @@ jobs:
       - name: Sync dependencies
         run: uv sync --frozen
 
-      - uses: iterative/setup-dvc@v1
+      - uses: iterative/setup-dvc@v2
       - name: Get data
         run: uv run dvc pull
         env:
