@@ -6,7 +6,7 @@ CLAUDE.md
 src/project/data/
 
 # models (they are too big)
-models/
+# models/
 
 # Hydra outputs
 outputs/
@@ -85,7 +85,6 @@ cover/
 src/project/models
 src/project/profile
 wandb/
-models.dvc
 
 # Translations
 *.mo
@@ -195,4 +194,3 @@ cython_debug/
 #.idea/
 /data
 /models
-models.dvc
