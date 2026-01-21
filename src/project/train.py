@@ -52,8 +52,8 @@ def train(cfg: DictConfig) -> None:
     train_ds, val_ds = random_split(dataset, [train_size, val_size])
     log.info(f"Dataset split: {train_size} train, {val_size} val")
 
-    train_loader = DataLoader(train_ds, batch_size=cfg.batch_size, shuffle=True, num_workers=9, pin_memory=True)
-    val_loader = DataLoader(val_ds, batch_size=cfg.batch_size, shuffle=False, num_workers=9, pin_memory=True)
+    train_loader = DataLoader(train_ds, batch_size=cfg.batch_size, shuffle=True, num_workers=cfg.num_workers, pin_memory=True)
+    val_loader = DataLoader(val_ds, batch_size=cfg.batch_size, shuffle=False, num_workers=cfg.num_workers, pin_memory=True)
 
     model = Model(model_name=cfg.model_name, lr=cfg.lr).to(device)
     log.info(f"Model: {cfg.model_name}, lr: {cfg.lr}")

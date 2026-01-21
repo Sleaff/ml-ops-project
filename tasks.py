@@ -12,7 +12,7 @@ PYTHON_VERSION = "3.12"
 def preprocess_data(ctx: Context) -> None:
     """Preprocess data."""
     ctx.run(
-        f"uv run src/{PROJECT_NAME}/data.py src/{PROJECT_NAME}/data src/{PROJECT_NAME}/data/processed",
+        f"uv run src/{PROJECT_NAME}/data.py data/raw data/processed",
         echo=True,
         pty=not WINDOWS,
     )
