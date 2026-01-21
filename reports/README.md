@@ -149,7 +149,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *package to do ... and ... in our project*.
 >
 > Answer:
-
+Filip
 --- question 3 fill here ---
 
 ## Coding environment
@@ -169,7 +169,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *complete copy of our development environment, one would have to run the following commands*
 >
 > Answer:
-
+Joakim
 --- question 4 fill here ---
 
 ### Question 5
@@ -185,7 +185,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *experiments.*
 >
 > Answer:
-
+Kenneth
 --- question 5 fill here ---
 
 ### Question 6
@@ -200,7 +200,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *concepts are important in larger projects because ... . For example, typing ...*
 >
 > Answer:
-
+Kenneth
 --- question 6 fill here ---
 
 ## Version control
@@ -219,7 +219,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *application but also ... .*
 >
 > Answer:
-
+Joakim
 --- question 7 fill here ---
 
 ### Question 8
@@ -234,7 +234,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *code and even if we were then...*
 >
 > Answer:
-
+Joakim
 --- question 8 fill here ---
 
 ### Question 9
@@ -249,7 +249,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *addition to the main branch. To merge code we ...*
 >
 > Answer:
-
+Filip
 --- question 9 fill here ---
 
 ### Question 10
@@ -264,7 +264,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *pipeline*
 >
 > Answer:
-
+Kenneth
 --- question 10 fill here ---
 
 ### Question 11
@@ -281,7 +281,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *here: <weblink>*
 >
 > Answer:
-
+Kenneth
 --- question 11 fill here ---
 
 ## Running code and tracking experiments
@@ -300,7 +300,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *We used a simple argparser, that worked in the following way: Python  my_script.py --lr 1e-3 --batch_size 25*
 >
 > Answer:
-
+Filip
 --- question 12 fill here ---
 
 ### Question 13
@@ -315,7 +315,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *one would have to do ...*
 >
 > Answer:
-
+Filip
 --- question 13 fill here ---
 
 ### Question 14
@@ -332,7 +332,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *As seen in the second image we are also tracking ... and ...*
 >
 > Answer:
-
+Vebjørn
 --- question 14 fill here ---
 
 ### Question 15
@@ -347,7 +347,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *training docker image: `docker run trainer:latest lr=1e-3 batch_size=64`. Link to docker file: <weblink>*
 >
 > Answer:
-
+Filip
 --- question 15 fill here ---
 
 ### Question 16
@@ -362,7 +362,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *run of our main code at some point that showed ...*
 >
 > Answer:
-
+Vebjørn
 --- question 16 fill here ---
 
 ## Working in the cloud
@@ -551,7 +551,7 @@ s242723 - Vebjørn Sæten Skre <br>
 > *Whenever we commit code and push to GitHub, it auto triggers ... and ... . From there the diagram shows ...*
 >
 > Answer:
-
+Vebjørn
 --- question 29 fill here ---
 
 ### Question 30
