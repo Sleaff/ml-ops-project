@@ -88,7 +88,7 @@ wandb/
 # Translations
 *.mo
 *.pot
-
+models.dvc
 # Django stuff:
 *.log
 local_settings.py
