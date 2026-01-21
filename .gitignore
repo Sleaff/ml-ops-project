@@ -6,7 +6,7 @@ CLAUDE.md
 src/project/data/
 
 # models (they are too big)
-# models/
+
 
 # Hydra outputs
 outputs/
