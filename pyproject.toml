@@ -38,6 +38,7 @@ dependencies = [
     "wandb>=0.24.0",
     "requests>=2.32.5",
     "torch-tb-profiler>=0.4.3",
+    "markdown>=3.10",
 ]
 
 [dependency-groups]
