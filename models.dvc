@@ -1,6 +1,18 @@
 outs:
-- md5: ac4054d78f9d4bb6bf5fcb5bb9a8a817.dir
-  size: 531001460
-  nfiles: 2
-  hash: md5
+- hash: md5
   path: models
+  files:
+  - relpath: best_model_9.pt
+    md5: 9e5f40ca381eb127a8849d0e7751d6db
+    size: 265495759
+    cloud:
+      remote_storage:
+        etag: 08ea96a0b0d49c92031001
+        version_id: '1768999419906922'
+  - relpath: best_model_epoch=09_val_loss=0.1466.ckpt
+    md5: a5a03a2b319e1a7a29a35c1d81470ded
+    size: 265505701
+    cloud:
+      remote_storage:
+        etag: 089cdb8ab8d49c92031001
+        version_id: '1768999436332444'
