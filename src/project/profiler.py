@@ -1,7 +1,8 @@
 from hydra import compose, initialize
 from hydra.core.hydra_config import HydraConfig
-from project.train import train
 from torch.profiler import ProfilerActivity, profile, record_function
+
+from project.train import train
 
 # Pick profiler
 profiler = "simple"  # can also pick 'simple', 'pytorch', 'advanced'

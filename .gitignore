@@ -83,6 +83,7 @@ coverage.xml
 .pytest_cache/
 cover/
 src/project/models
+src/project/profile
 wandb/
 # Translations
 *.mo
