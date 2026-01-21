@@ -6,7 +6,7 @@ CLAUDE.md
 src/project/data/
 
 # models (they are too big)
-models/
+
 
 # Hydra outputs
 outputs/
@@ -85,10 +85,10 @@ cover/
 src/project/models
 src/project/profile
 wandb/
+
 # Translations
 *.mo
 *.pot
-
 # Django stuff:
 *.log
 local_settings.py
@@ -193,3 +193,4 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 /data
+/models
