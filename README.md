@@ -22,3 +22,9 @@ We propse a project to classify news. We have identified a dataset which include
 ## The models
 
 For the model we will try to use a BERT model. BERT is a language model from google which only uses the encoder part of a transformer architecture. We expect the model to do well on the task after we fine tune since it had a huge impact on the NLP field when it came out.
+
+## Google drive
+
+Data used and model can be found here:
+
+https://drive.google.com/drive/folders/1hMOLYBrIgZx8Rt_HkMGnNt8k7VrpikL_
