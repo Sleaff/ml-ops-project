@@ -127,10 +127,6 @@ will check the repositories and the code to verify your answers.
 ### Question 2
 > **Enter the study number for each member in the group**
 >
-> Example:
->
-> *sXXXXXX, sXXXXXX, sXXXXXX*
->
 > Answer:
 
 s195171 - Kenneth Plum Toft <br>
@@ -249,8 +245,19 @@ Joakim
 > *addition to the main branch. To merge code we ...*
 >
 > Answer:
-Filip
---- question 9 fill here ---
+
+  Yes, we used branches and pull requests, but our adherence was inconsistent. We followed a feature branch workflow
+  with PRs for larger features. Dependabot automated dependency update PRs, and CI ran tests before merging.                                                            
+                                                                                                                     
+  However, several areas could be improved. Some commits went directly to main without PRs (e.g., quick fixes, config
+  changes), bypassing code review. This happened when changes felt "too small" for a PR, but undermines the         
+  workflow's purpose. Our commit messages were sometimes vague ("fixed the uv.lock file") rather than explaining why 
+  changes were made. Branch naming was also inconsistent - not all branches followed the type/description convention.
+                                                                                                                     
+  For future projects, we would enforce stricter branch protection (no direct pushes to main or dev branch), require more          
+  descriptive commit messages focusing on intent, and establish clearer PR templates with checklists. Even small     
+  changes benefit from the PR process. It creates documentation and allows teammates to stay informed. The work
+  of making a PR is minimal compared to the information and trackability it provides.   
 
 ### Question 10
 
