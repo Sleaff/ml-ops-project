@@ -35,7 +35,6 @@ class MyDataset(Dataset):
     def __init__(self, data_path: Path) -> None:
         self.data_path = data_path
 
-        print(self.data_path)
         fake = pd.read_csv(self.data_path / "Fake.csv")
         real = pd.read_csv(self.data_path / "True.csv")
 

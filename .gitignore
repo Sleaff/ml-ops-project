@@ -14,6 +14,9 @@ outputs/
 # test cache
 manual_test/
 
+# profiling trace files (large)
+tests/profile/*.json
+
 # other local dev info
 .vscode/
 

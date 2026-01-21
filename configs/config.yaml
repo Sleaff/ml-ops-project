@@ -17,9 +17,12 @@ lr: 2e-5
 max_length: 256
 
 # Paths (relative to project root)
-data_path: "src/project/data"
-processed_data_path: "src/project/data/processed/news.csv"
-save_dir: "src/project/models"
+data_path: "data/raw"
+processed_data_path: "data/processed/news.csv"
+save_dir: "models"
+
+# DataLoader
+num_workers: 4
 
 # Checkpointing
 checkpoint_path: null
