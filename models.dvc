@@ -5,9 +5,9 @@ outs:
   - relpath: .DS_Store
     md5: 194577a7e20bdcc7afbb718f502c134c
     size: 6148
-  - relpath: best_model_9.pt_.gstmp
-    md5: 5a5ddf252855e3538f94eff760b81373
+  - relpath: models-best_model_9.pt
+    md5: 9e5f40ca381eb127a8849d0e7751d6db
     size: 265495759
-  - relpath: best_model_epoch=09_val_loss=0.1466.ckpt_.gstmp
-    md5: 4892fb5c4df3b273b72587e48ad7ed95
+  - relpath: models-best_model_epoch=09_val_loss=0.1466.ckpt
+    md5: a5a03a2b319e1a7a29a35c1d81470ded
     size: 265505701
