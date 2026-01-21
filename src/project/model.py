@@ -7,7 +7,13 @@ from transformers import AutoModel
 class Model(pl.LightningModule):
     """Binary text classification model."""
 
-    def __init__(self, model_name: str = "distilbert-base-uncased", lr: float = 2e-5):
+    def __init__(
+        self, 
+        model_name: str = "distilbert-base-uncased", 
+        lr: float = 2e-5,
+        optimizer: str = "adamw",
+        weight_decay: float = 0.01
+        ):
         super().__init__()
         self.encoder = AutoModel.from_pretrained(model_name)
 
@@ -18,6 +24,8 @@ class Model(pl.LightningModule):
         self.classifier = nn.Linear(hidden_size, 1)
         self.loss_fn = nn.BCEWithLogitsLoss()
         self.lr = lr
+        self.optimizer = optimizer
+        self.weight_decay = weight_decay
 
     def forward(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
         outputs = self.encoder(
@@ -72,7 +80,10 @@ class Model(pl.LightningModule):
         return preds
 
     def configure_optimizers(self):
-        return torch.optim.AdamW(self.classifier.parameters(), lr=self.lr)
+        if self.optimizer == "adamw":
+            return torch.optim.AdamW(self.classifier.parameters(), lr=self.lr, weight_decay=self.weight_decay)
+        elif self.optimizer == "adam":
+            return torch.optim.Adam(self.classifier.parameters(), lr=self.lr, weight_decay=self.weight_decay)
 
 
 if __name__ == "__main__":

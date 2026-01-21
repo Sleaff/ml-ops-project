@@ -1,0 +1,40 @@
+wandb_project: "news-classification"
+wandb_entity: null
+program: src/project/train.py
+method: bayes
+run_cap: 7
+metric:
+  name: val_loss 
+  goal: minimize
+
+parameters:
+  lr:
+    distribution: log_uniform_values
+    min: 1e-5
+    max: 5e-5
+  batch_size:
+    values: [16, 32, 64]
+  weight_decay:
+    values: [0.001, 0.01, 0.1]
+  optimizer: 
+    values: 
+      - adamw
+      - adam
+  max_length:
+    values: [128, 256]
+  epochs:
+    value: 10
+
+early_terminate:
+  type: hyperband
+  min_iter: 3   
+  eta: 3
+
+command:
+  - uv
+  - run
+  - python
+  - ${program}
+  - --config-dir=configs
+  - --config-name=config
+  - ${args_no_hyphens}
