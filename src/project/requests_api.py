@@ -20,7 +20,7 @@ print(response.text)
 response = requests.post(url, json=fake_data)
 print(response.text)
 
-url = "http://localhost:8080/mode/"
+url = "http://localhost:8080/model/"
 
 response = requests.get(url)
 print(response.text)

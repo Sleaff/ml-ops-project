@@ -51,7 +51,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
-@app.get("/mode/")
+@app.get("/model/")
 async def get_model():
     return ckpt
 
@@ -63,7 +63,7 @@ async def create_news(news: NewsItem):
     csv_data = StringIO("content,label\n" f"{content},0\n")
 
     dataset = NewsDataset(csv_data, tokenizer)
-    data_loader = DataLoader(dataset, num_workers=1)
+    data_loader = DataLoader(dataset, num_workers=1, persistent_workers=True)
     out = trainer.predict(model, dataloaders=data_loader, ckpt_path=ckpt)
     pred = int(out[0].item())
 
