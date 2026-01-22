@@ -28,6 +28,7 @@ antlr4-python3-runtime==4.9.3
     #   omegaconf
 anyio==4.12.1
     # via
+    #   httpx
     #   starlette
     #   watchfiles
 appdirs==1.4.4
@@ -63,6 +64,8 @@ celery==5.6.2
 certifi==2026.1.4
     # via
     #   geventhttpclient
+    #   httpcore
+    #   httpx
     #   requests
     #   sentry-sdk
 cffi==2.0.0
@@ -280,10 +283,13 @@ gto==1.9.0
     # via dvc
 h11==0.16.0
     # via
+    #   httpcore
     #   uvicorn
     #   wsproto
 hf-xet==1.2.0 ; platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'arm64' or platform_machine == 'x86_64'
     # via huggingface-hub
+httpcore==1.0.9
+    # via httpx
 httplib2==0.31.1
     # via
     #   google-api-python-client
@@ -291,6 +297,8 @@ httplib2==0.31.1
     #   oauth2client
 httptools==0.7.1
     # via uvicorn
+httpx==0.28.1
+    # via project
 huggingface-hub==0.36.0
     # via
     #   tokenizers
@@ -304,6 +312,7 @@ identify==2.6.16
 idna==3.11
     # via
     #   anyio
+    #   httpx
     #   requests
     #   yarl
 iniconfig==2.3.0
