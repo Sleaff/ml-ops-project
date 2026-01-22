@@ -355,8 +355,22 @@ Filip
 > *As seen in the second image we are also tracking ... and ...*
 >
 > Answer:
-Vebjørn
---- question 14 fill here ---
+
+We used WandB to track our hyper parameter sweep experiments. Looking at the first image we compare validation accuracy of different sets of hyper parameters over epochs. To get a feel for what hyperparameters was working well we ran 9 different sets of configurations and ran the training for 10 epochs to see their performance. We used WanB’s built-in gaussian search method to select hyper parameters within specified ranges. Looking at the first image we compare validation accuracy over number of epochs. This plot would suggest the topmost line «spring-sweep-6» to be most promising, however, as we varied the batch size as a hyp-parameter, image number 2 showes another story. In the topmost figure in image 2 we plotted validation accuracies over optimizer steps rather than epochs, where we can see that the run «denim-sweep-4» actually learned much faster, but had less optimizer steps than «spring-sweep-6». Thus we created another run with the exact same hyp-param configuration as «denim-sweep-4», and ran it for more epoch. The result of which can be viewed as the green line bottom figure of image 2 «graceful-cherry-29», clearly showing superior performance compared to the other configurations. Image three shows how the different parameters correlate to the validation accuracy. A trend is that too large weight decay and too low learning rate is bad for model performance. 
+
+Our best run was «graceful-cherry-29» which achieved a validation accuracy of around 96% after around 30 epochs, or 15k steps, of fine tuning. From other plots comparing validation and training loss, there was no sign of overfitting and sustained training would most likely make the model performance continue the upward trend.
+
+Image 1:
+<img width="1420" height="817" alt="!!!!!!!!!!!" src="https://github.com/user-attachments/assets/1fdd8372-06e2-41e1-b87a-7e7d2f6239a7" />
+
+Image 2:
+
+<img width="747" height="791" alt="!!!!!!!" src="https://github.com/user-attachments/assets/e56ef2b5-4288-49b3-80df-a41efd39ee86" />
+
+
+Image 3:
+
+<img width="1418" height="708" alt="Screenshot 2026-01-22 at 17 57 38" src="https://github.com/user-attachments/assets/425b0c47-fdcd-4636-9e4b-cd444c56715b" />
 
 ### Question 15
 
