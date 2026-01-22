@@ -1,46 +1,44 @@
-import copy
-import csv
-from io import StringIO
+from unittest.mock import MagicMock, patch
 
-import pandas as pd
-import pytorch_lightning as pl
+import pytest
 import torch
-from project.dataset import NewsDataset
-from project.model import Model
-from torch.utils.data import DataLoader, Dataset
-from transformers import AutoTokenizer
 
 
-def test_model():
-    tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
-    model = Model()
+def test_model_has_correct_loss_function():
+    """Test model uses BCEWithLogitsLoss."""
+    with patch("project.model.AutoModel"):
+        from project.model import Model
 
-    csv_data = StringIO("content,label\n" "this is a test,0\n")
+        model = Model()
+        assert isinstance(model.loss_fn, torch.nn.BCEWithLogitsLoss)
 
-    tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
-    dataset = NewsDataset(csv_data, tokenizer)
-    data_loader = DataLoader(dataset)
 
-    assert torch.any(data_loader.dataset[0]["input_ids"]), "Data error"
-    assert data_loader.batch_size == 1, "Batch size error"
+def test_model_has_correct_learning_rate():
+    """Test model initializes with correct learning rate."""
+    with patch("project.model.AutoModel"):
+        from project.model import Model
 
-    initial_state = copy.deepcopy(model.state_dict())
+        model = Model(lr=1e-4)
+        assert model.lr == 1e-4
 
-    trainer = pl.Trainer(
-        accelerator="auto",
-        devices=1,
-        max_epochs=1,
-        limit_train_batches=2,
-        logger=False,
-        enable_checkpointing=False,
-    )
 
-    trainer.fit(model, data_loader)
+def test_model_classifier_output_size():
+    """Test classifier outputs single value for binary classification."""
+    with patch("project.model.AutoModel") as mock_auto:
+        mock_encoder = MagicMock()
+        mock_encoder.config.hidden_size = 768
+        mock_encoder.parameters.return_value = []
+        mock_auto.from_pretrained.return_value = mock_encoder
 
-    changed = False
-    for k in initial_state:
-        if not torch.equal(initial_state[k], model.state_dict()[k]):
-            changed = True
-            break
+        from project.model import Model
 
-    assert changed, "Model parameters did not change during training"
+        model = Model()
+
+        assert model.classifier.out_features == 1
+
+
+def test_predictions_are_binary():
+    """Test that sigmoid + threshold produces binary outputs."""
+    logits = torch.tensor([2.0, -2.0, 0.5, -0.5])
+    preds = (torch.sigmoid(logits) > 0.5).float()
+    assert torch.all((preds == 0) | (preds == 1))

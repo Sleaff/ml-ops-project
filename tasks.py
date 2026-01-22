@@ -146,8 +146,7 @@ def gcloud_train(ctx: Context, gpu: bool = False, no_wandb: bool = False) -> Non
         f"docker run --rm --network=host {gpu_flags} {env_flags} {GCP_IMAGE_NAME}"
     )
     ctx.run(
-        f"gcloud compute ssh {GCP_VM_NAME} --zone={GCP_ZONE} --project={GCP_PROJECT} "
-        f'--command="{docker_cmd}"',
+        f"gcloud compute ssh {GCP_VM_NAME} --zone={GCP_ZONE} --project={GCP_PROJECT} " f'--command="{docker_cmd}"',
         echo=True,
         pty=not WINDOWS,
     )
