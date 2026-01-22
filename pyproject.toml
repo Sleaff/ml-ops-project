@@ -41,6 +41,7 @@ dependencies = [
     "torch-tb-profiler>=0.4.3",
     "markdown>=3.10",
     "pydantic>=2.12.5",
+    "locust>=2.43.1",
 ]
 
 [dependency-groups]
