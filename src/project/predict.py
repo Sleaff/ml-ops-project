@@ -22,7 +22,7 @@ def predict(in_data: str) -> Union[list[Any], list[list[Any]], None]:
     csv_data = StringIO("content,label\n" f"{in_data},0\n")
 
     dataset = NewsDataset(csv_data, tokenizer)
-    data_loader = DataLoader(dataset, num_workers=11)
+    data_loader = DataLoader(dataset, num_workers=11, persistent_workers=True)
 
     ckpt = Path("src/project/models/best_model_epoch=09_val_loss=0.1466")
 
