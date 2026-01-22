@@ -31,4 +31,4 @@ jobs:
 
       - name: ruff format
         run: |
-          uv run ruff format --check .
+          uv run ruff format .

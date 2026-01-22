@@ -165,8 +165,14 @@ Filip
 > *complete copy of our development environment, one would have to run the following commands*
 >
 > Answer:
-Joakim
---- question 4 fill here ---
+We used uv to manage our dependencies. The list of dependencies was auto-generated using uv export uv export --no-hashes --format requirements.txt --output-file requirements.txt. To get a complete copy of our development environment one would have to run the following commands:
+git clone <repo_url>
+cd <repo_folder>
+uv install --requirements-file requirements.txt
+
+All of our team menmbers used uv and we had no issues with dependencies.
+
+We had the most issues with dependencies towards cloud related access. Such as working in the same GCP project and having the right permissions to buckets. We had issues granting access to DVC remote buckets so we had to make the buckets public for easier access.
 
 ### Question 5
 
@@ -215,8 +221,10 @@ Kenneth
 > *application but also ... .*
 >
 > Answer:
-Joakim
---- question 7 fill here ---
+
+We added a model test, which checks if the model weights change during training. We feed the model a some dummy inputs and labels to see if the weights change. Indicating if our training loop works.
+
+Later we added an inference tester which tested if two sample inputs produced an expected output. However this test was removed as when it was added to github action it could not load the model due to the model being git ignored.
 
 ### Question 8
 
@@ -230,8 +238,15 @@ Joakim
 > *code and even if we were then...*
 >
 > Answer:
-Joakim
---- question 8 fill here ---
+Name                      Stmts   Miss  Cover   Missing
+-------------------------------------------------------
+src/project/__init__.py       0      0   100%
+src/project/dataset.py       16      0   100%
+src/project/model.py         49     15    69%   48-62, 65-72
+-------------------------------------------------------
+TOTAL                        65     15    77%
+
+We had a total code coverage of 77%. There were also some warnings which we ignored because they were not relevant to our project. These are warnings such as not using the validation function or changing the amount of workers. Even if our coverage was 100% we would still not trust it to be error free. Code coverage only shows which lines of code are executed during testing, not if the tests are meaningful or if all edge cases are covered. There were also many files which are not covered at all and some tests which were removed for simplicity
 
 ### Question 9
 
@@ -247,18 +262,18 @@ Joakim
 > Answer:
 
   Yes, we used branches and pull requests. We followed a feature branch workflow
-  with PRs for larger features. Dependabot automated dependency update PRs, and CI ran tests before merging.                                                            
-                                                                                                                     
+  with PRs for larger features. Dependabot automated dependency update PRs, and CI ran tests before merging.
+
   However, several areas could be improved. Some commits went directly to main without PRs (like quick fixes, config
-  changes), bypassing code review. This happened when changes felt too small for a PR, but does not follow the         
-  workflows purpose. Our commit messages were sometimes a bit vague ("fixed the uv.lock file") rather than explaining why 
+  changes), bypassing code review. This happened when changes felt too small for a PR, but does not follow the
+  workflows purpose. Our commit messages were sometimes a bit vague ("fixed the uv.lock file") rather than explaining why
   changes were made. Branch naming was also someimes inconsistent as not all branches followed the type/description convention.
-                                                                                                                     
-  For future projects, we would enforce stricter branch protection (no direct pushes to main), require more          
-  descriptive commit messages focusing on intent, and establish clearer PR templates with checklists. 
-  We could also consider implementing a dev branch between main and features to protect main more, especially since it is suppsoed to be deployable production code. 
+
+  For future projects, we would enforce stricter branch protection (no direct pushes to main), require more
+  descriptive commit messages focusing on intent, and establish clearer PR templates with checklists.
+  We could also consider implementing a dev branch between main and features to protect main more, especially since it is suppsoed to be deployable production code.
   Even small changes benefit from the PR process. It creates documentation and allows teammates to stay informed. The work
-  of making a PR is minimal compared to the information and trackability it provides.   
+  of making a PR is minimal compared to the information and trackability it provides.
 
 ### Question 10
 
@@ -462,7 +477,7 @@ Vebjørn
 >
 > Answer:
 
---- question 23 fill here ---
+We managed to write an API for our model using FastAPI. We are using a language model thus we need to input some text. Thus the requester needs to add a title and a text which they want to figure out if its fake or real news. We did this by adding a post method to the API which then feeds the text to a preloaded model which runs through the lifespan of the API. We also added a get method to check the model parameters to see if it they were loaded correctly. To make the API we had to make a prediction function which was simply since we had already implemented pytorch lightning.
 
 ### Question 24
 
@@ -477,6 +492,8 @@ Vebjørn
 > *`curl -X POST -F "file=@file.json"<weburl>`*
 >
 > Answer:
+
+First we tried to get our API to run on a docker container. However we were having issues with loading our pretrained model into the docker run API.
 
 --- question 24 fill here ---
 
@@ -493,7 +510,9 @@ Vebjørn
 >
 > Answer:
 
---- question 25 fill here ---
+We tried load testing while running the API on locally. For this we used locust. We wrote a locust performance test script to feed our API with random datapoints in our dataset to similate each request to the API. We tested with 10 users at the same time sending requests, getting around 0.7 requests per second. The API handeled it very well, but after adding too many worker eventually the API crashed. We found that the response time increased dramatically when first adding users while it started to lower and stabilize after a while.
+![load_testing](figures/load_tests.png)
+
 
 ### Question 26
 
