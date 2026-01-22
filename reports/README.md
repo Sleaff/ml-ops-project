@@ -385,8 +385,10 @@ Filip
 > *run of our main code at some point that showed ...*
 >
 > Answer:
-Vebjørn
---- question 16 fill here ---
+
+Our debugging process focused on ensuring integrity of the training loop and data. We implemented a «test_model()» function to verify that model parameters changed during training by comparing the initial state of the weight with the state after a short run. We also included a «test_news_dataset()» function that verified our dataset was of correct type. For errors during code development we used VS codes debugging feature. To maintain structure and an organized track record we made use of pythons logging library and saved prints in these log files with dates and times. 
+
+When running training in the hpc each epoch took around 1-1,5 minutes. To inspect if we could increase the efficiency of our code we made use of code profiling. We used hydra to switch between simple, advanced and PyTorch profiling tools, allowing us to create detailed reports of the code performance, from which we saw that there was a huge CPU overhead. To mitigate this bottleneck we made adjustments to our data loaders, by setting num_workers=4, pin_memory=True and persisten_workers=True. This reduced the CPU overhead and made our training more than 3.3 times faster, with each epoch taking around 18 seconds. 
 
 ## Working in the cloud
 
