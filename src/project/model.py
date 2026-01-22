@@ -67,6 +67,9 @@ class Model(pl.LightningModule):
         self.log("loss/val_loss", loss, on_epoch=True, prog_bar=True)
         self.log("acc/val_acc", acc, on_epoch=True, prog_bar=True)
 
+        # For file name bc the slash makes problems
+        self.log("val_loss", loss)
+
         return loss
 
     def predict_step(self, batch) -> torch.Tensor:

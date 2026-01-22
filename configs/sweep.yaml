@@ -1,5 +1,5 @@
-wandb_project: "news-classification"
-wandb_entity: null
+project: news-classification
+entity: vebjornskre-danmarks-tekniske-universitet-dtu
 program: src/project/train.py
 method: bayes
 run_cap: 7
