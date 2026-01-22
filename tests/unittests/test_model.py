@@ -2,13 +2,12 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 import torch
+from project.model import Model
 
 
 def test_model_has_correct_loss_function():
     """Test model uses BCEWithLogitsLoss."""
     with patch("project.model.AutoModel"):
-        from project.model import Model
-
         model = Model()
         assert isinstance(model.loss_fn, torch.nn.BCEWithLogitsLoss)
 
@@ -16,8 +15,6 @@ def test_model_has_correct_loss_function():
 def test_model_has_correct_learning_rate():
     """Test model initializes with correct learning rate."""
     with patch("project.model.AutoModel"):
-        from project.model import Model
-
         model = Model(lr=1e-4)
         assert model.lr == 1e-4
 
@@ -29,8 +26,6 @@ def test_model_classifier_output_size():
         mock_encoder.config.hidden_size = 768
         mock_encoder.parameters.return_value = []
         mock_auto.from_pretrained.return_value = mock_encoder
-
-        from project.model import Model
 
         model = Model()
 
