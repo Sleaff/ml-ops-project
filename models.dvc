@@ -2,17 +2,17 @@ outs:
 - hash: md5
   path: models
   files:
-  - relpath: models-best_model_9.pt
+  - relpath: best_model_9.pt
     md5: 9e5f40ca381eb127a8849d0e7751d6db
     size: 265495759
     cloud:
       remote_storage:
-        etag: 08c3dcb89be09c92031001
-        version_id: '1769002597494339'
-  - relpath: models-best_model_epoch=09_val_loss=0.1466.ckpt
+        etag: 08f6dfd5b3ff9f92031001
+        version_id: '1769114049015798'
+  - relpath: best_model_epoch=09_val_loss=0.1466.ckpt
     md5: a5a03a2b319e1a7a29a35c1d81470ded
     size: 265505701
     cloud:
       remote_storage:
-        etag: 08b0cc9c8ce09c92031001
-        version_id: '1769002565576240'
+        etag: 08a8d7f7c2ff9f92031001
+        version_id: '1769114081029032'
