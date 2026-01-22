@@ -1,6 +1,6 @@
 import requests
 
-url = "http://localhost:8000/news/"
+url = "http://localhost:8080/news/"
 true_data = {
     "title": "Mexico to review need for tax changes after U.S. reform-document MEXICO CITY (Reuters)",
     "text": "Mexico’s finance ministry will predict whether to make fiscal changes in response to the U.S. tax reform, according to a document seen by Reuters on Friday. In the document, the ministry said Mexico would not make changes that left it with a higher public sector deficit. “Nevertheless, there will be an assessment of whether modifications should be made to Mexico’s fiscal framework,” the document said.",
@@ -18,4 +18,9 @@ fake_data = {
 response = requests.post(url, json=true_data)
 print(response.text)
 response = requests.post(url, json=fake_data)
+print(response.text)
+
+url = "http://localhost:8080/mode/"
+
+response = requests.get(url)
 print(response.text)

@@ -3,3 +3,4 @@
 ['remote "remote_storage"']
     url = gs://sleaff_mlops_data_bucket/
     version_aware = true
+    credentialpath = ../default.json

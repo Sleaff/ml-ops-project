@@ -29,7 +29,7 @@ async def lifespan(app: FastAPI):
     model = Model().to(device)
     tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
 
-    ckpt = Path("models/best_model_epoch=09_val_loss=0.1466")
+    ckpt = Path("models/model-best_model_epoch=09_val_loss=0.1466")
 
     if not os.path.exists(ckpt):
         ckpt = None
@@ -49,6 +49,11 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+
+@app.get("/mode/")
+async def get_model():
+    return ckpt
 
 
 @app.post("/news/")
