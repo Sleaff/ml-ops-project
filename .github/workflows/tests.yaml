@@ -37,7 +37,7 @@ jobs:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       - name: Get data
-        run: uv run dvc pull
+        run: uv run dvc pull data.dvc
 
       - name: Run tests & coverage
         run: |
