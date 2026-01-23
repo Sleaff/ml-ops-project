@@ -145,7 +145,7 @@ uv run uvicorn src.project.api:app --reload --port 8000
 uv run python src/project/frontend.py
 ```
 
-Open http://localhost:7860 in your browser.
+Open http://localhost:8000 in your browser.
 
 ### Docker (no GCP auth needed)
 
