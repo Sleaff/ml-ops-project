@@ -184,3 +184,22 @@ When deployed to Cloud Run, go to **GCP Console** → **Monitoring** → **Metri
 2. Add condition (e.g., latency > 5s, error rate > 10%)
 3. Add notification channel (email, Slack)
 4. Save
+
+---
+
+## Data Drift Detection
+
+Uses Evidently AI to detect data drift between training and production data.
+
+```bash
+# Generate drift report
+uv run python src/project/drift_detection.py
+
+# Open report
+open reports/drift_report.html
+```
+
+The HTML report shows:
+- Dataset drift summary (drift detected yes/no)
+- Per-column drift scores
+- Distribution comparisons between reference and current data
