@@ -557,9 +557,17 @@ We managed to write an API for our model using FastAPI. We are using a language 
 >
 > Answer:
 
-First we tried to get our API to run on a docker container. However we were having issues with loading our pretrained model into the docker run API.
+We tried to get our API to run on a docker container. However we were having issues with loading our pretrained model into the docker run API. However we managed to run the API on a local network which could sitll be loaded through docker. 
 
---- question 24 fill here ---
+We  made the docker image like this:
+sudo docker build -f dockerfiles/api.dockerfile . -t api:latest
+
+And started the API at a specified adress like this. 
+sudo docker run -p 8080:8000 api:latest
+
+We could then post requests to our server using the python package "requests"
+
+We unfortunately did not have time to implement it into the cloud but we would had created a service to run our container and then changed the url of the python package to match the gcp service url.
 
 ### Question 25
 
