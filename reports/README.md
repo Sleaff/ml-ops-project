@@ -334,9 +334,9 @@ We originally had more complex CI setup that pulled data from DVC and tested wit
 >
 > Answer:
 
-We used Hydra for experiment configuration. Hyperparameters are stored in YAML config files under configs/. This separates configuration from code and makes it easy to change settings without editing Python files. To run an experiment with default settings: uv run python src/project/train.py                                                                                                                                                                                                            
-To override parameters from command line: uv run python src/project/train.py model.lr=1e-4 training.batch_size=16 training.max_epochs=5                                                                                                                                                 
-Hydra also logs the full config for each run, making experiments reproducible.   
+We used Hydra for experiment configuration. Hyperparameters are stored in YAML config files under configs/. This separates configuration from code and makes it easy to change settings without editing Python files. To run an experiment with default settings: uv run python src/project/train.py
+To override parameters from command line: uv run python src/project/train.py model.lr=1e-4 training.batch_size=16 training.max_epochs=5
+Hydra also logs the full config for each run, making experiments reproducible.
 
 
 ### Question 13
@@ -352,16 +352,16 @@ Hydra also logs the full config for each run, making experiments reproducible.
 >
 > Answer:
 
-We used several tools to ensure reproducibility:                                                                                                                                                                                  
-Hydra automatically saves the full configuration for each run in an outputs/ folder with timestamps. This means we always know exactly what parameters were used.                                                                     
-Weights & Biases logs all training metrics, hyperparameters, and system info to the cloud. Each run gets a unique ID and we can compare runs in the W&B dashboard. The config is also stored there.                                           
-                                                                                                                                                                        DVC tracks our dataset versions. The data is stored in a GCS bucket and DVC keeps track of which version was used. This ensures we can always get back the exact data used for training.                                                      
-                                                                                                                                                                        Git tracks all code changes. Combined with the logged configs and data versions, we can recreate any experiment.                                                                                                                                                                                                                                                                                             
-  To reproduce an experiment, one would:                                                                                                                                                                                                        
-  1. Checkout the correct git commit                                                                                                                                                                                                            
-  2. Run dvc pull to get the right data version                                                                                                                                                                                                 
-  3. Copy the saved Hydra config and run training with those parameters                                                                                                                                                                         
-  4. Or find the run in W&B and use the logged config                         
+We used several tools to ensure reproducibility:
+Hydra automatically saves the full configuration for each run in an outputs/ folder with timestamps. This means we always know exactly what parameters were used.
+Weights & Biases logs all training metrics, hyperparameters, and system info to the cloud. Each run gets a unique ID and we can compare runs in the W&B dashboard. The config is also stored there.
+                                                                                                                                                                        DVC tracks our dataset versions. The data is stored in a GCS bucket and DVC keeps track of which version was used. This ensures we can always get back the exact data used for training.
+                                                                                                                                                                        Git tracks all code changes. Combined with the logged configs and data versions, we can recreate any experiment.
+  To reproduce an experiment, one would:
+  1. Checkout the correct git commit
+  2. Run dvc pull to get the right data version
+  3. Copy the saved Hydra config and run training with those parameters
+  4. Or find the run in W&B and use the logged config
 
 ### Question 14
 
@@ -407,13 +407,13 @@ Image 3:
 >
 > Answer:
 
-We developed two Docker images: one for training and one for the inference API. The training image includes Google Cloud SDK and is used for cloud training on GCP. It copies the code, configs, and runs a training script. We use it on a GPU VM in GCP: 
+We developed two Docker images: one for training and one for the inference API. The training image includes Google Cloud SDK and is used for cloud training on GCP. It copies the code, configs, and runs a training script. We use it on a GPU VM in GCP:
 
-    docker build -f dockerfiles/train.dockerfile -t train:latest .                                                                                                          docker run --gpus all train:latest                                                                                                                                                                                                            
+    docker build -f dockerfiles/train.dockerfile -t train:latest .                                                                                                          docker run --gpus all train:latest
 The API image packages the FastAPI application with the model. It uses DVC to pull the trained model during build. To run locally:
 
-    docker build -f dockerfiles/api.dockerfile -t news-api .                                                                                                                docker run -p 8000:8000 news-api                                                                                                                                                                                                              
-Both images use uv as the package manager with a slim Python 3.12 base image. The training image is automatically built via GitHub Actions and pushed to Google Container Registry when code changes. Link to API dockerfile: https://github.com/[your-repo]/blob/main/dockerfiles/api.dockerfile     
+    docker build -f dockerfiles/api.dockerfile -t news-api .                                                                                                                docker run -p 8000:8000 news-api
+Both images use uv as the package manager with a slim Python 3.12 base image. The training image is automatically built via GitHub Actions and pushed to Google Container Registry when code changes. Link to API dockerfile: https://github.com/[your-repo]/blob/main/dockerfiles/api.dockerfile
 
 ### Question 16
 
@@ -447,12 +447,12 @@ When running training in the hpc each epoch took around 1-1,5 minutes. To inspec
 >
 > Answer:
 
-We used the following GCP services:                                                                                                                                                                                                           
-Cloud Storage (GCS Bucket) - Stores our training data and trained model checkpoints. The bucket gs://sleaff_mlops_data_bucket/ holds the dataset and model files that are downloaded during training and inference.                           
-                                                                                                                                                                        Compute Engine - Provides a VM with a T4 GPU for training. We run a SPOT instance to reduce costs. The VM pulls our Docker image and runs training jobs.                                                                                      
-Container Registry (GCR) - Stores our Docker images. When we build a new training image, it gets pushed to gcr.io/mlops-483515/train:latest so the VM can pull it.                                                                            
-Cloud Build - Automatically builds Docker images when triggered. Connected to our GitHub repo for CI/CD.                                                                                                                                      
-Cloud Run - Infrastructure is set up for deploying the API as a serverless container, though not actively deployed to save costs.  
+We used the following GCP services:
+Cloud Storage (GCS Bucket) - Stores our training data and trained model checkpoints. The bucket gs://sleaff_mlops_data_bucket/ holds the dataset and model files that are downloaded during training and inference.
+                                                                                                                                                                        Compute Engine - Provides a VM with a T4 GPU for training. We run a SPOT instance to reduce costs. The VM pulls our Docker image and runs training jobs.
+Container Registry (GCR) - Stores our Docker images. When we build a new training image, it gets pushed to gcr.io/mlops-483515/train:latest so the VM can pull it.
+Cloud Build - Automatically builds Docker images when triggered. Connected to our GitHub repo for CI/CD.
+Cloud Run - Infrastructure is set up for deploying the API as a serverless container, though not actively deployed to save costs.
 
 ### Question 18
 
@@ -467,19 +467,19 @@ Cloud Run - Infrastructure is set up for deploying the API as a serverless conta
 >
 > Answer:
 
-We used Compute Engine to run model training with GPU acceleration. Training a DistilBERT model on CPU is slow, so we needed a GPU instance.                                                                                                  
-We created a VM called mlops-training-vm in us-west1-b with the following specs:                                                                                                                                                              
-  - GPU: NVIDIA T4 (16GB VRAM)                                                                                                                                                                                                                  
-  - Instance type: SPOT (preemptible) to reduce costs                                                                                                                                                                                           
-  - Cost: ~$0.40/hour when running                                                                                                                                                                                                              
-  - OS: Standard Linux with Docker and NVIDIA drivers installed                                                                                                                                                                                 
-he workflow is:                                                                                                                                                                                                                              
-  1. SSH into the VM via gcloud compute ssh                                                                                                                                                                                                     
-  2. Pull the training Docker image from GCR (gcr.io/mlops-483515/train:latest)                                                                                                                                                                 
-  3. Download data from GCS bucket                                                                                                                                                                                                              
-  4. Run training with docker run --gpus all                                                                                                                                                                                                    
-  5. Upload model checkpoints back to GCS                                                                                                                                                                                                       
-  6. Stop the VM to save money                                                                                                                                                                                                                  
+We used Compute Engine to run model training with GPU acceleration. Training a DistilBERT model on CPU is slow, so we needed a GPU instance.
+We created a VM called mlops-training-vm in us-west1-b with the following specs:
+  - GPU: NVIDIA T4 (16GB VRAM)
+  - Instance type: SPOT (preemptible) to reduce costs
+  - Cost: ~$0.40/hour when running
+  - OS: Standard Linux with Docker and NVIDIA drivers installed
+he workflow is:
+  1. SSH into the VM via gcloud compute ssh
+  2. Pull the training Docker image from GCR (gcr.io/mlops-483515/train:latest)
+  3. Download data from GCS bucket
+  4. Run training with docker run --gpus all
+  5. Upload model checkpoints back to GCS
+  6. Stop the VM to save money
 We used SPOT instances because our training jobs are short and can handle interruptions. If preempted, we just restart. This saved significant costs compared to regular instances.
 
 ### Question 19
@@ -522,7 +522,7 @@ We used SPOT instances because our training jobs are short and can handle interr
 >
 > Answer:
 
-Yes, we trained our model using Compute Engine. We chose Compute Engine over Vertex AI because it was the simpler solution and easier to understand for our team. We had some issues at first with CPU instances - training was too slow. We then tried to get a GPU instance but faced availability issues. We switched to a SPOT instance with a T4 GPU which had better availability and lower cost.         
+Yes, we trained our model using Compute Engine. We chose Compute Engine over Vertex AI because it was the simpler solution and easier to understand for our team. We had some issues at first with CPU instances - training was too slow. We then tried to get a GPU instance but faced availability issues. We switched to a SPOT instance with a T4 GPU which had better availability and lower cost.
 
 The workflow is: push Docker image to Container Registry, SSH into the VM, pull image, download data from GCS, run training with GPU, upload model back to GCS. We wrapped this in an invoke command (uv run invoke gcloud-train --gpu) so teammates can run training with one command.
 
@@ -591,11 +591,11 @@ We tried load testing while running the API on locally. For this we used locust.
 >
 > Answer:
 
-Yes, we implemented basic monitoring using Prometheus metrics in our FastAPI application. The API exposes a /metrics endpoint with the following metrics:                                                                                     
+Yes, we implemented basic monitoring using Prometheus metrics in our FastAPI application. The API exposes a /metrics endpoint with the following metrics:
 - api_requests_total - Counter for total requests by endpoint                                                                                                          - api_request_latency_seconds - Histogram tracking response times                                                                                                      - api_predictions_total - Counter for predictions by class (REAL/FAKE)
 
-This lets us track how many requests the API handles, how fast it responds, and the distribution of predictions. If suddenly most predictions are FAKE, it could indicate something is wrong.                                                 
-                                                                                                                                                                                                                                                
+This lets us track how many requests the API handles, how fast it responds, and the distribution of predictions. If suddenly most predictions are FAKE, it could indicate something is wrong.
+
 We did not fully set up cloud monitoring with GCP Cloud Monitoring and alerts. If we had more time, we would connect the Prometheus metrics to GCP Monitoring and create alerts for things like high latency (>5s) or high error rates. This would help us catch issues before users complain and ensure the model keeps performing well over time.
 
 ## Overall discussion of project
@@ -685,4 +685,4 @@ Student s243586 was in charge of implementing pytorch lightning to simplify the 
 
 Student s242726 was in charge of the core ML pipeline (data preprocessing, dataset, model, training), Hydra configuration, GCP cloud training with GPU support, Prometheus API monitoring, Evidently drift detection, and the Gradio frontend.
 
-
+Student s195171 was in charge of version control setup and initial DevOps infrastructure. GitHub repository structure, configuring Git workflows with branch protection and PR templates, implementing DVC for data versioning, and creating the CI/CD pipeline with GitHub Actions. Also developed the testing infrastructure including unit tests, integration tests. Set up pre-commit hooks, linting workflows, and automated dependency updates with Dependabot.
