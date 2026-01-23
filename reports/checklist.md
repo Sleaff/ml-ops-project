@@ -1,6 +1,6 @@
 # Project Checklist Status
 
-## Week 1 (17/18 = 94%)
+## Week 1 (18/18 = 100%)
 
 | Status | Item |
 |--------|------|
@@ -12,7 +12,7 @@
 | ✅ | Add a model to model.py and a training procedure to train.py and get that running (M6) |
 | ✅ | Remember to fill out the requirements.txt and requirements_dev.txt file with whatever dependencies (M2+M6) |
 | ✅ | Remember to comply with good coding practices (pep8) while doing the project (M7) |
-| 🟡 | Do a bit of code typing and remember to document essential parts of your code (M7) - *minimal typing/docs* |
+| ✅ | Do a bit of code typing and remember to document essential parts of your code (M7) |
 | ✅ | Setup version control for your data or part of your data (M8) |
 | ✅ | Add command line interfaces and project commands to your code where it makes sense (M9) |
 | ✅ | Construct one or multiple docker files for your code (M10) |
@@ -22,10 +22,10 @@
 | ✅ | Use profiling to optimize your code (M12) |
 | ✅ | Use logging to log important events in your code (M14) |
 | ✅ | Use Weights & Biases to log training progress and other important metrics/artifacts (M14) |
-| ❌ | Consider running a hyperparameter optimization sweep (M14) |
+| ✅ | Consider running a hyperparameter optimization sweep (M14) - *wandb sweep with Bayesian search* |
 | ✅ | Use PyTorch-lightning to reduce the amount of boilerplate in your code (M15) |
 
-## Week 2 (11/14 = 79%)
+## Week 2 (13/14 = 93%)
 
 | Status | Item |
 |--------|------|
@@ -43,10 +43,10 @@
 | ✅ | Get your model training in GCP using either the Engine or Vertex AI (M21) |
 | ✅ | Create a FastAPI application that can do inference using your model (M22) |
 | 🟡 | Deploy your model in GCP using either Functions or Run as the backend (M23) - *infra ready, not deployed* |
-| 🟡 | Write API tests for your application and setup continues integration for these (M24) - *file exists but empty* |
+| ✅ | Write API tests for your application and setup continues integration for these (M24) |
 | ✅ | Load test your application (M24) |
 | ❌ | Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25) |
-| ❌ | Create a frontend for your API (M26) |
+| ✅ | Create a frontend for your API (M26) - *Gradio frontend* |
 
 ## Week 3 (1/8 = 13%)
 
@@ -65,7 +65,9 @@
 
 | Week | Done | Total | Percentage |
 |------|------|-------|------------|
-| Week 1 | 17 | 18 | 94% |
-| Week 2 | 11 | 14 | 79% |
+| Week 1 | 18 | 18 | 100% |
+| Week 2 | 13 | 14 | 93% |
 | Week 3 | 1 | 8 | 13% |
-| **Total** | **29** | **40** | **73%** |
+| **Total** | **32** | **40** | **80%** |
+
+Week 1 complete. Week 2 missing only data/model change workflows and Cloud Run deployment. Week 3 (monitoring, drift, distributed training) not yet implemented.
