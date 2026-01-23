@@ -1,33 +1,90 @@
-# project
+# Fake News Classifier
 
-Machine Learning Operations Project
+An MLOps project for binary classification of news articles as real or fake, built as part of the DTU course 02476 Machine Learning Operations.
 
-## Students
+## Team
 
-s195171 - Kenneth Plum Toft <br>
-s242726 - Philip Arthur Blaafjell <br>
-s243586 - Joakim Dinh <br>
-s242723 - Vebjørn Sæten Skre <br>
+| Student ID | Name |
+|------------|------|
+| s195171 | Kenneth Plum Toft |
+| s242726 | Philip Arthur Blaafjell |
+| s243586 | Joakim Dinh |
+| s242723 | Vebjørn Sæten Skre |
 
-## Goal of the project
+## Project Overview
 
-The goal for this project is to learn the frameworks around ML-ops. Our group consists of students with extensive experience with machine learning, but not too much with the framework around it. We are all inexperienced with using the tools proposed in the course so the goal for our group would be to implement as much of the tools from the course as possible into the project so we can see which tools we like and would want to work with later. Moreover we also want to get used to working in a collaborative manner where we can document, view and understand the changes the others make.
+This project classifies news articles as **fake** or **real** using a fine-tuned DistilBERT model. The focus is on learning MLOps tools and practices: version control, containerization, cloud training, CI/CD, experiment tracking, and monitoring.
 
-## The Data
+### Dataset
 
-https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset
+[Kaggle: Fake and Real News Dataset](https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset)
 
-We propse a project to classify news. We have identified a dataset which includes two types of classes. One with fake news and one with true news. The dataset is mostly pure text but also includes other features such as the type of news and the date the text was published. The dataset includes 17903 unqiue datapoints.
+- ~44,000 news articles (half fake, half real)
+- Text-based classification task
+- Stored in GCS bucket, versioned with DVC
 
-## The models
+### Model
 
-For the model we will try to use a BERT model. BERT is a language model from google which only uses the encoder part of a transformer architecture. We expect the model to do well on the task after we fine tune since it had a huge impact on the NLP field when it came out.
+We use **DistilBERT** (`distilbert-base-uncased`) from Hugging Face Transformers:
+- Encoder is frozen, only the classifier head is trained
+- Binary classification with BCEWithLogitsLoss
+- Achieves ~96% validation accuracy after fine-tuning
 
-## Google drive
+---
 
-Data used and model can be found here:
+## Quick Start
 
-https://drive.google.com/drive/folders/1hMOLYBrIgZx8Rt_HkMGnNt8k7VrpikL_?usp=sharing
+### Installation
+
+```bash
+# Clone the repo
+git clone https://github.com/Sleaff/ml-ops-project.git
+cd ml-ops-project
+
+# Install dependencies (requires uv)
+uv sync
+
+# Pull data from GCS
+uv run dvc pull
+```
+
+### Local Training
+
+```bash
+uv run python src/project/train.py
+```
+
+Override hyperparameters with Hydra:
+```bash
+uv run python src/project/train.py model.lr=1e-4 training.batch_size=16
+```
+
+### Run Tests
+
+```bash
+uv run pytest tests/
+uv run coverage run -m pytest tests/ && uv run coverage report
+```
+
+---
+
+## Project Structure
+
+```
+src/project/
+├── data.py              # Data downloading & preprocessing
+├── dataset.py           # PyTorch Dataset wrapper
+├── model.py             # DistilBERT + classifier model
+├── train.py             # Training loop (PyTorch Lightning)
+├── api.py               # FastAPI inference API
+├── frontend.py          # Gradio web interface
+└── drift_detection.py   # Evidently data drift detection
+
+configs/                 # Hydra configuration files
+dockerfiles/             # Docker images for training and API
+tests/                   # Unit and integration tests
+.github/workflows/       # CI/CD pipelines
+```
 
 ---
 
@@ -203,3 +260,22 @@ The HTML report shows:
 - Dataset drift summary (drift detected yes/no)
 - Per-column drift scores
 - Distribution comparisons between reference and current data
+
+---
+
+## Tech Stack
+
+| Category | Tools |
+|----------|-------|
+| **ML Framework** | PyTorch, PyTorch Lightning, Hugging Face Transformers |
+| **Experiment Tracking** | Weights & Biases |
+| **Configuration** | Hydra |
+| **Data Versioning** | DVC + Google Cloud Storage |
+| **Containerization** | Docker |
+| **CI/CD** | GitHub Actions |
+| **Cloud** | Google Cloud Platform (Compute Engine, Cloud Storage, Container Registry, Cloud Build) |
+| **API** | FastAPI, Uvicorn |
+| **Frontend** | Gradio |
+| **Monitoring** | Prometheus, Evidently AI |
+| **Code Quality** | Ruff, pre-commit hooks |
+| **Package Management** | uv |
