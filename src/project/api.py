@@ -1,17 +1,24 @@
 import os
+import time
 from contextlib import asynccontextmanager
 from io import StringIO
 from pathlib import Path
 
 import pytorch_lightning as pl
 import torch
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from pydantic import BaseModel
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
 
 from project.dataset import NewsDataset
 from project.model import Model
+
+# Prometheus metrics
+REQUEST_COUNT = Counter("api_requests_total", "Total number of API requests", ["endpoint", "method"])
+REQUEST_LATENCY = Histogram("api_request_latency_seconds", "Request latency in seconds", ["endpoint"])
+PREDICTION_COUNT = Counter("api_predictions_total", "Total predictions by class", ["prediction"])
 
 
 class NewsItem(BaseModel):
@@ -51,13 +58,23 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
+@app.get("/metrics")
+async def metrics():
+    """Prometheus metrics endpoint."""
+    return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+
 @app.get("/model/")
 async def get_model():
+    REQUEST_COUNT.labels(endpoint="/model/", method="GET").inc()
     return ckpt
 
 
 @app.post("/news/")
 async def create_news(news: NewsItem):
+    start_time = time.time()
+    REQUEST_COUNT.labels(endpoint="/news/", method="POST").inc()
+
     content = news.title + " " + news.text
 
     csv_data = StringIO("content,label\n" f"{content},0\n")
@@ -71,5 +88,9 @@ async def create_news(news: NewsItem):
         prediction = "REAL NEWS"
     else:
         prediction = "FAKE NEWS"
+
+    # Record metrics
+    PREDICTION_COUNT.labels(prediction=prediction).inc()
+    REQUEST_LATENCY.labels(endpoint="/news/").observe(time.time() - start_time)
 
     return f"This is {prediction}"

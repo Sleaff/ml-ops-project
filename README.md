@@ -153,3 +153,34 @@ Open http://localhost:8000 in your browser.
 docker build -f dockerfiles/api.dockerfile -t news-api .
 docker run -p 8000:8000 news-api
 ```
+
+---
+
+## API Monitoring & Alerts
+
+### Prometheus Metrics
+
+The API exposes metrics at `/metrics`:
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `api_requests_total` | Counter | Total requests by endpoint |
+| `api_request_latency_seconds` | Histogram | Request latency |
+| `api_predictions_total` | Counter | Predictions by class |
+
+```bash
+curl http://localhost:8000/metrics
+```
+
+### GCP Cloud Monitoring
+
+When deployed to Cloud Run, go to **GCP Console** → **Monitoring** → **Metrics Explorer** to view:
+- Request count, latency, error rate
+- Container CPU/memory usage
+
+### Alerts Setup
+
+1. **GCP Console** → **Monitoring** → **Alerting** → **Create Policy**
+2. Add condition (e.g., latency > 5s, error rate > 10%)
+3. Add notification channel (email, Slack)
+4. Save
