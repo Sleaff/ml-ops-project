@@ -127,3 +127,29 @@ sudo systemctl restart docker
 ```
 
 **Permission denied?** Make sure you're added as Owner on the GCP project `mlops-483515`.
+
+---
+
+## Running the API & Frontend
+
+### Quick Start
+
+```bash
+# 1. Download model from GCS
+gcloud storage cp gs://sleaff_mlops_data_bucket/models/best_model_epoch=09_val_loss=0.1466.ckpt models/
+
+# 2. Start API (Terminal 1)
+uv run uvicorn src.project.api:app --reload --port 8000
+
+# 3. Start Gradio frontend (Terminal 2)
+uv run python src/project/frontend.py
+```
+
+Open http://localhost:7860 in your browser.
+
+### Docker (no GCP auth needed)
+
+```bash
+docker build -f dockerfiles/api.dockerfile -t news-api .
+docker run -p 8000:8000 news-api
+```
