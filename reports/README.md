@@ -187,8 +187,9 @@ We had the most issues with dependencies towards cloud related access. Such as w
 > *experiments.*
 >
 > Answer:
-Kenneth
---- question 5 fill here ---
+We started with the cookiecutter template from the course (https://github.com/SkafteNicki/mlops_template) and built our project from there. The main stuff we filled out was `src/project/` with the usual files `model.py`, `train.py`, `data.py`, `dataset.py`, and `api.py` for the core functionality. We made a `configs/` folder with `config.yaml` for Hydra to handle hyperparameters, which was super useful for running different experiments without changing code. We created `dockerfiles/` for both training and the API. For testing we split things into `tests/unittests/` (quick tests that run in CI) and `tests/integration/` (slower tests with the actual model).
+
+We used DVC to version control our data. The processed news dataset lives in `data/processed/` and trained models in `models/`. The main thing we changed from the template was using `uv` for dependencies instead of pip, which worked way better for us. We also added a `scripts/` folder for some bash scripts to run training in the cloud. Finally, we set up a bunch of GitHub Actions workflows in `.github/workflows/` to automatically run tests, linting, and pre-commit checks whenever we pushed code. Everything's organized pretty cleanly with data, models, code, and tests in separate places.
 
 ### Question 6
 
@@ -202,8 +203,9 @@ Kenneth
 > *concepts are important in larger projects because ... . For example, typing ...*
 >
 > Answer:
-Kenneth
---- question 6 fill here ---
+We used Ruff for linting and code formatting through pre-commit hooks. Ruff runs automatically before every commit to check our code style and fix common issues like unused imports or incorrect spacing. We configured it in pyproject.toml with a 120-character line length. Our pre-commit setup also checks for trailing whitespace and validates YAML files. We added some type hints to important functions but didn't go crazy with it everywhere. For documentation, we wrote docstrings explaining what our main functions do in model.py, train.py, and api.py.
+
+These things are pretty important when working in a group. Without formatting rules, everyone writes code differently and merge conflicts can become a nightmare. Linting catches silly mistakes before they break anything. Type hints help when you come back to code after a week and forgot what parameters a function needs. In our team of four people, having these tools meant we could work on different parts without constantly asking "what does this function expect?" or "why is this failing?". It made code reviews faster since we could focus on actual logic instead of arguing about spaces vs tabs.
 
 ## Version control
 
@@ -287,8 +289,11 @@ We had a total code coverage of 77%. There were also some warnings which we igno
 > *pipeline*
 >
 > Answer:
-Kenneth
---- question 10 fill here ---
+We used DVC for data and model version control. We started out using Google Drive as our remote storage, which was easy to set up initially. Later we switched to Google Cloud Storage buckets to better integrate with the rest of our GCP setup and keep everything in one place.
+
+DVC helped us a lot because we could keep our 40k+ news articles and trained model checkpoints out of git. Instead we just track small `.dvc` files that point to where the actual data lives in the cloud. This meant our git repo stayed small and fast. When someone new joined or when we ran training in the cloud, we could just use `dvc pull` and get the latest data and models without having to manually download anything or ask someone to share files.
+
+The best part was that we could version our data just like code, if we later reprocess the dataset or train a new model, DVC can track those changes. We could also go back to an older version if needed. It also made our CI/CD pipeline simpler since workflows could pull the exact data version needed for testing. Overall it was a bit weird at first, but it made collaboration smoother than passing around files manually or having everyone store large datasets locally.
 
 ### Question 11
 
@@ -304,8 +309,13 @@ Kenneth
 > *here: <weblink>*
 >
 > Answer:
-Kenneth
---- question 11 fill here ---
+We split our CI into separate workflow files in `.github/workflows/`. The main ones are `tests.yaml` for unit testing, `linting.yaml` for code quality checks. Both trigger on pushes to main and on pull requests, so we catch issues before they get merged. Another important one is and `integration-tests.yaml` for testing with actual trained models and real data, which runs automatically every sunday and manually if needed.
+
+For unit testing (tests.yaml), we test across multiple operating systems - ubuntu, windows, and macos - all with Python 3.13. We use uv's built-in caching (`enable-cache: true`) which speeds things up by not re-downloading dependencies every time. The workflow runs our unit tests with pytest and generates a coverage report showing which parts of our code are actually tested. We intentionally removed DVC data pulling from this unit testing workflow to keep tests fast and isolated, our unit tests then use mocked data instead of real files.
+
+For linting (linting.yaml), we run Ruff to check code formatting and automatically fix small issues. This catches stuff like unused imports or inconsistent spacing before anyone even reviews the code. We also have pre-commit hooks that run similar checks locally, so ideally these linting workflows should just pass.
+
+We originally had more complex CI setup that pulled data from DVC and tested with real models, but we realized that was more of an integration test thing. Now our CI is much faster, unit tests finish in under a minute usually. An example run can be seen at https://github.com/Sleaff/ml-ops-project/actions.
 
 ## Running code and tracking experiments
 
@@ -356,7 +366,7 @@ Filip
 >
 > Answer:
 
-We used WandB to track our hyper parameter sweep experiments. Looking at the first image we compare validation accuracy of different sets of hyper parameters over epochs. To get a feel for what hyperparameters was working well we ran 9 different sets of configurations and ran the training for 10 epochs to see their performance. We used WanB’s built-in gaussian search method to select hyper parameters within specified ranges. Looking at the first image we compare validation accuracy over number of epochs. This plot would suggest the topmost line «spring-sweep-6» to be most promising, however, as we varied the batch size as a hyp-parameter, image number 2 showes another story. In the topmost figure in image 2 we plotted validation accuracies over optimizer steps rather than epochs, where we can see that the run «denim-sweep-4» actually learned much faster, but had less optimizer steps than «spring-sweep-6». Thus we created another run with the exact same hyp-param configuration as «denim-sweep-4», and ran it for more epoch. The result of which can be viewed as the green line bottom figure of image 2 «graceful-cherry-29», clearly showing superior performance compared to the other configurations. Image three shows how the different parameters correlate to the validation accuracy. A trend is that too large weight decay and too low learning rate is bad for model performance. 
+We used WandB to track our hyper parameter sweep experiments. Looking at the first image we compare validation accuracy of different sets of hyper parameters over epochs. To get a feel for what hyperparameters was working well we ran 9 different sets of configurations and ran the training for 10 epochs to see their performance. We used WanB’s built-in gaussian search method to select hyper parameters within specified ranges. Looking at the first image we compare validation accuracy over number of epochs. This plot would suggest the topmost line «spring-sweep-6» to be most promising, however, as we varied the batch size as a hyp-parameter, image number 2 showes another story. In the topmost figure in image 2 we plotted validation accuracies over optimizer steps rather than epochs, where we can see that the run «denim-sweep-4» actually learned much faster, but had less optimizer steps than «spring-sweep-6». Thus we created another run with the exact same hyp-param configuration as «denim-sweep-4», and ran it for more epoch. The result of which can be viewed as the green line bottom figure of image 2 «graceful-cherry-29», clearly showing superior performance compared to the other configurations. Image three shows how the different parameters correlate to the validation accuracy. A trend is that too large weight decay and too low learning rate is bad for model performance.
 
 Our best run was «graceful-cherry-29» which achieved a validation accuracy of around 96% after around 30 epochs, or 15k steps, of fine tuning. From other plots comparing validation and training loss, there was no sign of overfitting and sustained training would most likely make the model performance continue the upward trend.
 
