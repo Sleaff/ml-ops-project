@@ -489,7 +489,7 @@ We used SPOT instances because our training jobs are short and can handle interr
 >
 > Answer:
 
---- question 19 fill here ---
+<img width="1420" height="817" alt="!!!!!!!!!!!" src="https://github.com/Sleaff/ml-ops-project/blob/main/reports/figures/bucket.png" />
 
 ### Question 20
 
@@ -498,7 +498,7 @@ We used SPOT instances because our training jobs are short and can handle interr
 >
 > Answer:
 
---- question 20 fill here ---
+<img width="1420" height="817" alt="!!!!!!!!!!!" src="https://github.com/Sleaff/ml-ops-project/blob/main/reports/figures/artifactreg.png" />
 
 ### Question 21
 
@@ -507,7 +507,7 @@ We used SPOT instances because our training jobs are short and can handle interr
 >
 > Answer:
 
---- question 21 fill here ---
+<img width="1420" height="817" alt="!!!!!!!!!!!" src="https://github.com/Sleaff/ml-ops-project/blob/main/reports/figures/build_history.png" />
 
 ### Question 22
 
