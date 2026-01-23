@@ -53,13 +53,19 @@ def train(cfg: DictConfig) -> None:
     log.info(f"Dataset split: {train_size} train, {val_size} val")
 
     train_loader = DataLoader(
-        train_ds, batch_size=cfg.batch_size, shuffle=True, num_workers=cfg.num_workers, pin_memory=True
+        train_ds, batch_size=cfg.batch_size, shuffle=True, num_workers=cfg.num_workers, pin_memory=True,persistent_workers=True 
     )
     val_loader = DataLoader(
-        val_ds, batch_size=cfg.batch_size, shuffle=False, num_workers=cfg.num_workers, pin_memory=True
+        val_ds, batch_size=cfg.batch_size, shuffle=False, num_workers=cfg.num_workers, pin_memory=True, persistent_workers=True
     )
 
-    model = Model(model_name=cfg.model_name, lr=cfg.lr).to(device)
+    model = Model(
+        model_name=cfg.model_name, 
+        lr=cfg.lr, 
+        optimizer=cfg.optimizer,
+        weight_decay=cfg.weight_decay
+    ).to(device)
+
     log.info(f"Model: {cfg.model_name}, lr: {cfg.lr}")
 
     checkpoint_callback = ModelCheckpoint(
@@ -70,13 +76,20 @@ def train(cfg: DictConfig) -> None:
         save_top_k=cfg.save_top_k,
         save_last=True,
     )
-
+    # WandB logging
     if cfg.wandb_project:
         wandb_logger = WandbLogger(
             project=cfg.wandb_project,
             entity=cfg.wandb_entity,
-            log_model="all",
+            log_model="False",
         )
+        hyperparams = {
+            "learning_rate":cfg.lr, 
+            "batch_size":cfg.batch_size,
+            "num_epochs":cfg.epochs,
+            "optimizer":cfg.optimizer
+            }
+        wandb_logger.log_hyperparams(hyperparams)
     else:
         wandb_logger = None  # Or use pl.loggers.CSVLogger(save_dir)
 
