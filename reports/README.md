@@ -636,4 +636,5 @@ Vebjørn
 > *All members contributed to code by...*
 > *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
 > Answer:
+Student s243586 was in charge of implementing pytorch lightning to simplify the training pipeline, developing the API and load testing it, creating docker containers for training and API.
 
