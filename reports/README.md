@@ -382,17 +382,14 @@ We used WandB to track our hyper parameter sweep experiments. Looking at the fir
 
 Our best run was «graceful-cherry-29» which achieved a validation accuracy of 96% after around 30 epochs, or 15k steps, of fine tuning. From other plots comparing validation and training loss, there was no sign of overfitting and sustained training would probably make the model performance continue the upward trend.
 
-Image 1:
-<img width="1420" height="817" alt="!!!!!!!!!!!" src="https://github.com/user-attachments/assets/1fdd8372-06e2-41e1-b87a-7e7d2f6239a7" />
+Image 1:  
+![wandb_1](figures/wandb_1.png)
 
-Image 2:
+Image 2:  
+![wandb_2](figures/wandb_2.png)
 
-<img width="747" height="791" alt="!!!!!!!" src="https://github.com/user-attachments/assets/e56ef2b5-4288-49b3-80df-a41efd39ee86" />
-
-
-Image 3:
-
-<img width="1418" height="708" alt="Screenshot 2026-01-22 at 17 57 38" src="https://github.com/user-attachments/assets/425b0c47-fdcd-4636-9e4b-cd444c56715b" />
+Image 3:  
+![wandb_3](figures/wandb_3.png)
 
 ### Question 15
 
