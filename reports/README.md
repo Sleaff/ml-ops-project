@@ -380,7 +380,7 @@ Weights & Biases logs all training metrics, hyperparameters, and system info to 
 
 We used WandB to track our hyper parameter sweep experiments. Looking at the first image we compare validation accuracy of different sets of hyper parameters over epochs. To get a feel for what hyperparameters was working well we ran 9 different sets of configurations and ran the training for 10 epochs to see their performance. We used WanB’s built-in gaussian search method to select hyper parameters within specified ranges. Looking at the first image we compare validation accuracy over number of epochs. This plot would suggest the topmost line «spring-sweep-6» to be most promising, however, as we varied the batch size as a hyp-parameter, image number 2 showes another story. In the topmost figure in image 2 we plotted validation accuracies over optimizer steps rather than epochs, where we can see that the run «denim-sweep-4» actually learned much faster, but had less optimizer steps than «spring-sweep-6». Thus we created another run with the exact same hyp-param configuration as «denim-sweep-4», and ran it for more epoch. The result of which can be viewed as the green line bottom figure of image 2 «graceful-cherry-29», clearly showing superior performance compared to the other configurations. Image three shows how the different parameters correlate to the validation accuracy. A trend is that too large weight decay and too low learning rate is bad for model performance.
 
-Our best run was «graceful-cherry-29» which achieved a validation accuracy of around 96% after around 30 epochs, or 15k steps, of fine tuning. From other plots comparing validation and training loss, there was no sign of overfitting and sustained training would most likely make the model performance continue the upward trend.
+Our best run was «graceful-cherry-29» which achieved a validation accuracy of 96% after around 30 epochs, or 15k steps, of fine tuning. From other plots comparing validation and training loss, there was no sign of overfitting and sustained training would probably make the model performance continue the upward trend.
 
 Image 1:
 <img width="1420" height="817" alt="!!!!!!!!!!!" src="https://github.com/user-attachments/assets/1fdd8372-06e2-41e1-b87a-7e7d2f6239a7" />
@@ -489,7 +489,7 @@ We used SPOT instances because our training jobs are short and can handle interr
 >
 > Answer:
 
-<img width="1420" height="817" alt="!!!!!!!!!!!" src="https://github.com/Sleaff/ml-ops-project/blob/main/reports/figures/bucket.png" />
+![bucket](figures/bucket.png)
 
 ### Question 20
 
@@ -498,7 +498,7 @@ We used SPOT instances because our training jobs are short and can handle interr
 >
 > Answer:
 
-<img width="1420" height="817" alt="!!!!!!!!!!!" src="https://github.com/Sleaff/ml-ops-project/blob/main/reports/figures/artifactreg.png" />
+![artifact_registry](figures/artifactreg.png)
 
 ### Question 21
 
@@ -507,7 +507,7 @@ We used SPOT instances because our training jobs are short and can handle interr
 >
 > Answer:
 
-<img width="1420" height="817" alt="!!!!!!!!!!!" src="https://github.com/Sleaff/ml-ops-project/blob/main/reports/figures/build_history.png" />
+![build_history](figures/build_history.png)
 
 ### Question 22
 
@@ -574,7 +574,8 @@ First we tried to get our API to run on a docker container. However we were havi
 >
 > Answer:
 
-We tried load testing while running the API on locally. For this we used locust. We wrote a locust performance test script to feed our API with random datapoints in our dataset to similate each request to the API. We tested with 10 users at the same time sending requests, getting around 0.7 requests per second. The API handeled it very well, but after adding too many worker eventually the API crashed. We found that the response time increased dramatically when first adding users while it started to lower and stabilize after a while.
+We tried load testing while running the API on locally. For this we used locust. We wrote a locust performance test script to feed our API with random datapoints in our dataset to similate each request to the API. We tested with 10 users at the same time sending requests, getting around 0.7 requests per second. The API handeled it very well, but after adding too many worker eventually the API crashed. We found that the response time increased dramatically when first adding users while it started to lower and stabilize after a while. An image is attatched below for reference. 
+
 ![load_testing](figures/load_tests.png)
 
 
