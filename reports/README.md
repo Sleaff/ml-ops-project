@@ -293,7 +293,7 @@ We used DVC for data and model version control. We started out using Google Driv
 
 DVC helped us a lot because we could keep our 40k+ news articles and trained model checkpoints out of git. Instead we just track small `.dvc` files that point to where the actual data lives in the cloud. This meant our git repo stayed small and fast. When someone new joined or when we ran training in the cloud, we could just use `dvc pull` and get the latest data and models without having to manually download anything or ask someone to share files.
 
-The best part was that we could version our data just like code, if we later reprocess the dataset or train a new model, DVC can track those changes. We could also go back to an older version if needed. It also made our CI/CD pipeline simpler since workflows could pull the exact data version needed for testing. Overall it was a bit weird at first, but it made collaboration smoother than passing around files manually or having everyone store large datasets locally.
+The best part was that we could version our data just like code, if we later reprocess the dataset or train a new model, DVC can track those changes. We could also go back to an older version if needed. It also made our CI/CD pipeline simpler since workflows could pull the exact data version needed for testing.
 
 ### Question 11
 
