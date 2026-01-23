@@ -7,7 +7,7 @@ An MLOps project for binary classification of news articles as real or fake, bui
 | Student ID | Name |
 |------------|------|
 | s195171 | Kenneth Plum Toft |
-| s242726 | Philip Arthur Blaafjell |
+| s242726 | Filip Arthur Blaafjell |
 | s243586 | Joakim Dinh |
 | s242723 | Vebjørn Sæten Skre |
 
