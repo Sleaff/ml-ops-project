@@ -658,6 +658,8 @@ The diagram shows the complete architecture of our system. To the left in the di
 
 The inference code is built into a Docker image, ensuring a reproducible and isolated runtime environment with all required dependencies. When executed, this image loads the trained model checkpoint from the Google Cloud Storage (GCS) bucket and uses it to perform inference. As a user, an API request is sent to the system through FastAPI, where the request is processed using the Docker image and the loaded model. The prediction is then returned as an HTTP response. Gradio is used to provide a lightweight graphical user interface on top of the API, allowing users to interact with the model without directly issuing API calls.
 
+![system_architecture](figures/system_architecture.png)
+
 ### Question 30
 
 > **Discuss the overall struggles of the project. Where did you spend most time and what did you do to overcome these**
