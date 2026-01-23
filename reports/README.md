@@ -700,3 +700,5 @@ Student s242726 was in charge of the core ML pipeline (data preprocessing, datas
 detection. It was also useful for quickly understanding unfamiliar libraries and generating documentation. Code was always reviewed and tested before committing! [Claude Code](https://code.claude.com/docs/en/setup)
 
 Student s195171 was in charge of version control setup and initial DevOps infrastructure. GitHub repository structure, configuring Git workflows with branch protection and PR templates, implementing DVC for data versioning, and creating the CI/CD pipeline with GitHub Actions. Also developed the testing infrastructure including unit tests, integration tests. Set up pre-commit hooks, linting workflows, and automated dependency updates with Dependabot.
+
+Student s242723 was in charge of logging, debugging and profiling code. Training models and doing hyperparemter optimalization on the hpc, keeping track of experiments with Weights and Biases and analyzing the results. Also worked on imporivng developing workflow with invoke commands.
