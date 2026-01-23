@@ -621,7 +621,7 @@ We did not fully set up cloud monitoring with GCP Cloud Monitoring and alerts. I
 >
 > Answer:
 
---- question 27 fill here ---
+We used a shared GCP project with educational credits. Total usage was around $2.60, fully covered by the education billing account. Cloud Storage cost $1.35 for storing our dataset and model checkpoints in the GCS bucket. Compute Engine cost $1.23 for GPU training on our T4 SPOT instance. Networking and Cloud Build had minimal costs. The most expensive service was Cloud Storage, likely because we stored multiple model checkpoints. Working in the cloud was a good learning experience. Setting up the initial infrastructure took time, but once configured, it was easy for all team members to run training jobs. Using SPOT instances and stopping VMs when not in use kept costs very low.
 
 ### Question 28
 
