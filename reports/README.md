@@ -663,7 +663,12 @@ Vebjørn
 >
 > Answer:
 
---- question 30 fill here ---
+The biggest struggles in our project came from three main areas: version control coordination, cloud GPU availability, and keeping track of how all the different tools connect together.
+  
+At the start, version control was messy. We had four people working on different parts and sometimes pushed directly to main instead of using feature branches. This caused merge conflicts and made it hard to track what changed. We got better at this over time by enforcing pull requests and code reviews, but early commits were inconsistent and sometimes vague. Learning to work as a team with git took some adjustment.                                                      
+
+Cloud training was another challenge. We first tried CPU instances on GCP but training our DistilBERT model was painfully slow. When we tried to get GPU instances, we ran into availability issues - the T4 GPUs we wanted were often not available in our chosen region. We eventually switched to SPOT instances which had better availability and lower cost, but they can be preempted mid-training. We had to make sure our training could handle interruptions and save checkpoints frequently.                                                                                                                                                                              The hardest part was keeping track of how everything fits together. We used many different tools: git for code, DVC for data, Hydra for configs, W&B for experiment tracking, Docker for containers, GCP for cloud resources, GitHub Actions for CI/CD. Each tool is simple on its own, but making them all work together smoothly was overwhelming at times, and with so many new tools, it was hard to connect what tool was resonisble for what and why. What overlaps with eachother? When something broke, it was often unclear which part of the pipeline was the problem. Was it a DVC authentication issue? A Docker build failure? A missing config? Debugging across multiple tools and services took a lot of time.                                                                                                                                      
+We overcame these challenges by documenting everything, creating invoke commands to automate common workflows, and having good communcation. By the end of the project, we had a much better understanding of how MLOps pipelines work in practice!
 
 ### Question 31
 
@@ -684,6 +689,7 @@ Vebjørn
 
 Student s243586 was in charge of implementing pytorch lightning to simplify the training pipeline, developing the API and load testing it, creating docker containers for training and API.
 
-Student s242726 was in charge of the core ML pipeline (data preprocessing, dataset, model, training), Hydra configuration, GCP cloud training with GPU support, Prometheus API monitoring, Evidently drift detection, and the Gradio frontend.
+Student s242726 was in charge of the core ML pipeline (data preprocessing, dataset, model, training), Hydra configuration, GCP cloud training with GPU support, Prometheus API monitoring, Evidently drift detection, and the Gradio frontend. This student used Claude Code (Claude AI) to assist with development. It helped with writing some code, debugging errors, navigating GCP cloud training infrastructure, and implementing features like Prometheus monitoring and Evidently drift 
+detection. It was also useful for quickly understanding unfamiliar libraries and generating documentation. Code was always reviewed and tested before committing! [Claude Code](https://claude.ai/claude-code)
 
 Student s195171 was in charge of version control setup and initial DevOps infrastructure. GitHub repository structure, configuring Git workflows with branch protection and PR templates, implementing DVC for data versioning, and creating the CI/CD pipeline with GitHub Actions. Also developed the testing infrastructure including unit tests, integration tests. Set up pre-commit hooks, linting workflows, and automated dependency updates with Dependabot.
