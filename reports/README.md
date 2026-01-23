@@ -522,7 +522,9 @@ We used SPOT instances because our training jobs are short and can handle interr
 >
 > Answer:
 
---- question 22 fill here ---
+Yes, we trained our model using Compute Engine. We chose Compute Engine over Vertex AI because it was the simpler solution and easier to understand for our team. We had some issues at first with CPU instances - training was too slow. We then tried to get a GPU instance but faced availability issues. We switched to a SPOT instance with a T4 GPU which had better availability and lower cost.         
+
+The workflow is: push Docker image to Container Registry, SSH into the VM, pull image, download data from GCS, run training with GPU, upload model back to GCS. We wrapped this in an invoke command (uv run invoke gcloud-train --gpu) so teammates can run training with one command.
 
 ## Deployment
 
@@ -589,7 +591,12 @@ We tried load testing while running the API on locally. For this we used locust.
 >
 > Answer:
 
---- question 26 fill here ---
+Yes, we implemented basic monitoring using Prometheus metrics in our FastAPI application. The API exposes a /metrics endpoint with the following metrics:                                                                                     
+- api_requests_total - Counter for total requests by endpoint                                                                                                          - api_request_latency_seconds - Histogram tracking response times                                                                                                      - api_predictions_total - Counter for predictions by class (REAL/FAKE)
+
+This lets us track how many requests the API handles, how fast it responds, and the distribution of predictions. If suddenly most predictions are FAKE, it could indicate something is wrong.                                                 
+                                                                                                                                                                                                                                                
+We did not fully set up cloud monitoring with GCP Cloud Monitoring and alerts. If we had more time, we would connect the Prometheus metrics to GCP Monitoring and create alerts for things like high latency (>5s) or high error rates. This would help us catch issues before users complain and ensure the model keeps performing well over time.
 
 ## Overall discussion of project
 
@@ -624,7 +631,7 @@ We tried load testing while running the API on locally. For this we used locust.
 >
 > Answer:
 
---- question 28 fill here ---
+Yes, we implemented a frontend for our API using the ML-specific Gradio library. We wanted users to easily test the fake news classifier without needing to make API calls manually. The frontend has a simple interface where you enter a title and text, click submit, and get a prediction. We also added 10 example news articles from our dataset so users can quickly test with real data.
 
 ### Question 29
 
@@ -675,4 +682,7 @@ Vebjørn
 >
 
 Student s243586 was in charge of implementing pytorch lightning to simplify the training pipeline, developing the API and load testing it, creating docker containers for training and API.
+
+Student s242726 was in charge of the core ML pipeline (data preprocessing, dataset, model, training), Hydra configuration, GCP cloud training with GPU support, Prometheus API monitoring, Evidently drift detection, and the Gradio frontend.
+
 
