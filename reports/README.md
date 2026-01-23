@@ -656,8 +656,10 @@ Yes, we implemented a frontend for our API using the ML-specific Gradio library.
 > *Whenever we commit code and push to GitHub, it auto triggers ... and ... . From there the diagram shows ...*
 >
 > Answer:
-Vebjørn
---- question 29 fill here ---
+
+The diagram shows the complete architecture of our system. To the left in the diagram we have our developer playground where we work on the code and develop features and scripts. When making changes, or adding functionality to the code or data, we track these changes using GitHub and Data version control. In GitHub we make feature branches and merge them to main upon completion of tasks. As we are creating pull requests, we utilize GitHub Actions to automatically run continuous integration workflows, including code linting, unit tests, and integration tests (automatic every Sunday, otherwise manual), ensuring that new changes meet quality and correctness requirements before being merged. When it comes to data versioning the metadata gets uploaded to GitHub while the actual data gets stored in google cloud.   Model training is executed in the cloud using Google Cloud Compute Engine. Training jobs are configured using Hydra, which allows structured configuration management and reproducible experiments. During training, Weights & Biases (W&B) is used to log metrics, hyperparameters, and experiment artifacts including hyperparameter sweeps. Training is performed using PyTorch Lightning, and once training is complete, the best-performing model checkpoint is saved to the GCS bucket. 
+
+The inference code is built into a Docker image, ensuring a reproducible and isolated runtime environment with all required dependencies. When executed, this image loads the trained model checkpoint from the Google Cloud Storage (GCS) bucket and uses it to perform inference. As a user, an API request is sent to the system through FastAPI, where the request is processed using the Docker image and the loaded model. The prediction is then returned as an HTTP response. Gradio is used to provide a lightweight graphical user interface on top of the API, allowing users to interact with the model without directly issuing API calls.
 
 ### Question 30
 
