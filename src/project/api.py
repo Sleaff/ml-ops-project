@@ -2,11 +2,10 @@ import os
 from contextlib import asynccontextmanager
 from io import StringIO
 from pathlib import Path
-from typing import Any, Union
 
 import pytorch_lightning as pl
 import torch
-from fastapi import FastAPI, Form
+from fastapi import FastAPI
 from pydantic import BaseModel
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
@@ -29,10 +28,11 @@ async def lifespan(app: FastAPI):
     model = Model().to(device)
     tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
 
-    ckpt = Path("models/model-best_model_epoch=09_val_loss=0.1466")
+    ckpt = Path("models/best_model_epoch=09_val_loss=0.1466.ckpt")
 
     if not os.path.exists(ckpt):
         ckpt = None
+        print("Warning: No model checkpoint found, running without checkpoint")
 
     trainer = pl.Trainer(
         accelerator="auto",
@@ -68,8 +68,8 @@ async def create_news(news: NewsItem):
     pred = int(out[0].item())
 
     if pred == 1:
-        prediction = "FAKE NEWS"
-    else:
         prediction = "REAL NEWS"
+    else:
+        prediction = "FAKE NEWS"
 
     return f"This is {prediction}"
