@@ -477,7 +477,7 @@ packaging==25.0
     #   wandb
 paginate==0.5.7
     # via mkdocs-material
-pandas==2.3.3
+pandas==3.0.0
     # via
     #   project
     #   torch-tb-profiler
