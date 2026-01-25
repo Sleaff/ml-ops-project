@@ -299,7 +299,7 @@ httptools==0.7.1
     # via uvicorn
 httpx==0.28.1
     # via project
-huggingface-hub==0.36.0
+huggingface-hub==1.3.3
     # via
     #   tokenizers
     #   transformers
