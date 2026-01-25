@@ -567,7 +567,7 @@ pymdown-extensions==10.20
     # via
     #   mkdocs-material
     #   mkdocstrings
-pyopenssl==24.2.1
+pyopenssl==25.3.0
     # via pydrive2
 pyparsing==3.3.2
     # via
